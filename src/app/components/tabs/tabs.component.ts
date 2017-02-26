@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Tab} from '../models/tab';
+import {Tab} from '../../models/tab';
 
 @Component({
   selector: 'tabs',

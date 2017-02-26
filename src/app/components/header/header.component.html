@@ -1,0 +1,13 @@
+  <md-toolbar color="primary">
+    <h2>{{title}}</h2>
+    <span class="spacer"></span>
+    <label>{{managerDisplay}}</label>
+    <button md-icon-button [mdMenuTriggerFor]="menu">
+      <md-icon>fingerprint</md-icon>
+    </button>
+  </md-toolbar>
+  <md-menu #menu="mdMenu">
+      <button md-menu-item *ngFor="let man of managers" (click)="setManager(man)">
+        {{ man.firstName + " " + man.lastName }}
+      </button>
+  </md-menu>
