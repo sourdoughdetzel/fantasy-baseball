@@ -1,5 +1,8 @@
+@import '~@angular/material/core/theming/all-theme';
+@include mat-core();
+
 a{
     &.active{
-        border-bottom: 3px solid black;
+        border-bottom: 3px solid rebeccapurple;
     }
 }
