@@ -1,1 +1,34 @@
-<div>TEAM SHIT</div>
+<div class="teams-container">
+    <div class="teams-panel">
+        <md-card *ngFor="let team of teams;" class="compact" [ngClass]="{'active': team === selectedTeam}">
+            <md-card-header>
+                <md-card-title>{{team.name}}</md-card-title>
+                <md-card-subtitle>{{team.manager.firstName + ' ' + team.manager.lastName}}</md-card-subtitle>
+                <span class="spacer"></span>
+                <button md-button (click)="showDetails(team)" *ngIf="team !== selectedTeam">EDIT</button>
+            </md-card-header>
+        </md-card>
+    </div>
+    <div class="team-edit">
+        <md-toolbar>
+            <h4>{{selectedTeam.name}}</h4>
+            <span class="spacer"></span>
+            <button md-icon-button>
+                <md-icon>person_add</md-icon>
+            </button>
+        </md-toolbar>
+        <md-card *ngFor="let player of selectedTeam.players" class="minimal">
+            <md-card-header class="player">
+               <label class="name">{{player.firstName + ' ' + player.lastName}} </label>
+               <label class="positions" *ngFor="let pos of player.positions;">{{pos + '  '}}</label>
+               <span class="spacer"></span>
+               <md-radio-group [(ngModel)]="player.designation" class="designations">
+                    <md-radio-button class="designation" value="CK">CK</md-radio-button>
+                    <md-radio-button class="designation" value="RFA">RFA</md-radio-button>
+                    <md-radio-button class="designation" value="IP">IP</md-radio-button>
+                    <md-radio-button class="designation" value="NA">None</md-radio-button>
+                </md-radio-group>
+            </md-card-header>
+        </md-card>
+    </div>
+<div>

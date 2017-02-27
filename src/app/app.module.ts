@@ -14,6 +14,7 @@ import { TabsComponent} from "./components/tabs/tabs.component";
 import { TeamSetupComponent } from "./components/team-setup/team-setup.component";
 import { RFAProcessComponent } from "./components/rfa-process/rfa-process.component";
 import { ManagerService } from "./services/manager.service";
+import { TeamService } from "./services/team.service";
 
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
@@ -43,7 +44,7 @@ const appRoutes: Routes = [
             storageType: 'localStorage'
         })
   ],
-  providers: [ManagerService],
+  providers: [ManagerService, TeamService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

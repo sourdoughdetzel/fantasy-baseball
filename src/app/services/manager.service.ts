@@ -16,17 +16,17 @@ export class ManagerService {
 
     getLeagueManagers(): Manager[] {
         return [
-            {firstName: 'Andrew', lastName: 'Chong'},
-            {firstName: 'Ed', lastName: 'Dankanich'},
-            {firstName: 'Mike', lastName: 'Dankanich'},
-            {firstName: 'Nick', lastName: 'DeLuca'},
-            {firstName: 'Andrew', lastName: 'Detzel'},
-            {firstName: 'Eric', lastName: 'Detzel'},
-            {firstName: 'Jared', lastName: 'Duncan'},
-            {firstName: 'Ryan', lastName: 'Frigm'},
-            {firstName: 'Adam', lastName: 'Halpin'},
-            {firstName: 'Jeremy', lastName: 'Lehn'},
-            {firstName: 'Ashley', lastName: 'Vernon'},
+            {id: 1, firstName: 'Andrew', lastName: 'Chong'},
+            {id: 2, firstName: 'Ed', lastName: 'Dankanich'},
+            {id: 3, firstName: 'Mike', lastName: 'Dankanich'},
+            {id: 4, firstName: 'Nick', lastName: 'DeLuca'},
+            {id: 5, firstName: 'Andrew', lastName: 'Detzel'},
+            {id: 6, firstName: 'Eric', lastName: 'Detzel'},
+            {id: 7, firstName: 'Jared', lastName: 'Duncan'},
+            {id: 8, firstName: 'Ryan', lastName: 'Frigm'},
+            {id: 9, firstName: 'Adam', lastName: 'Halpin'},
+            {id: 10, firstName: 'Jeremy', lastName: 'Lehn'},
+            {id: 11, firstName: 'Ashley', lastName: 'Vernon'},
         ];
     }
 }
