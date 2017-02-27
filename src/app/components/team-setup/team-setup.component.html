@@ -11,9 +11,16 @@
     </div>
     <div class="team-edit">
         <md-toolbar>
-            <h4>{{selectedTeam.name}}</h4>
+            <h4 *ngIf="!editTeamName">{{selectedTeam.name}} Roster</h4>
+            <md-input-container *ngIf="editTeamName">
+                <input mdInput [(ngModel)]="selectedTeam.name">
+            </md-input-container>
+            <button md-icon-button (click)="editTeamName = !editTeamName;">
+                <md-icon *ngIf="!editTeamName">mode_edit</md-icon>
+                <md-icon *ngIf="editTeamName">done</md-icon>
+            </button>
             <span class="spacer"></span>
-            <button md-icon-button>
+            <button md-icon-button (click)="addPlayer()">
                 <md-icon>person_add</md-icon>
             </button>
         </md-toolbar>
@@ -26,8 +33,14 @@
                     <md-radio-button class="designation" value="CK">CK</md-radio-button>
                     <md-radio-button class="designation" value="RFA">RFA</md-radio-button>
                     <md-radio-button class="designation" value="IP">IP</md-radio-button>
-                    <md-radio-button class="designation" value="NA">None</md-radio-button>
+                    <md-radio-button class="designation" value="None">None</md-radio-button>
                 </md-radio-group>
+                <button md-icon-button (click)="editPlayer(player)">
+                    <md-icon>mode_edit</md-icon>
+                </button>
+                <button md-icon-button (click)="deletePlayer(player)">
+                    <md-icon>delete</md-icon>
+                </button>
             </md-card-header>
         </md-card>
     </div>

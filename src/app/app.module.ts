@@ -15,7 +15,7 @@ import { TeamSetupComponent } from "./components/team-setup/team-setup.component
 import { RFAProcessComponent } from "./components/rfa-process/rfa-process.component";
 import { ManagerService } from "./services/manager.service";
 import { TeamService } from "./services/team.service";
-
+import { AddPlayerDialog} from './components/team-setup/add-player/add-player.component';
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
   { path: 'teams',      component: TeamSetupComponent },
@@ -31,7 +31,8 @@ const appRoutes: Routes = [
     HeaderComponent,
     TabsComponent,
     RFAProcessComponent,
-    TeamSetupComponent
+    TeamSetupComponent,
+    AddPlayerDialog
   ],
   imports: [
     BrowserModule,
@@ -43,6 +44,9 @@ const appRoutes: Routes = [
             prefix: 'fantasy-baseball-app',
             storageType: 'localStorage'
         })
+  ],
+  entryComponents:[
+    AddPlayerDialog
   ],
   providers: [ManagerService, TeamService],
   bootstrap: [AppComponent]

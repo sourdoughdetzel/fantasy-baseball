@@ -1,0 +1,30 @@
+
+    <h3 md-dialog-title>
+        {{titleText}}
+    </h3>
+    <md-dialog-content>
+        <div>
+            <md-input-container>
+                <input mdInput placeholder="First Name" [(ngModel)]="player.firstName">
+            </md-input-container>
+            <md-input-container>
+                <input mdInput placeholder="Last Name" [(ngModel)]="player.lastName">
+            </md-input-container>
+        </div>
+        <div class="positions"> 
+            <div><span>Positions</span></div>
+            <md-checkbox *ngFor="let position of positions;" [checked]="position.c" [(ngModel)]="position.c" class="position">{{position.p}}</md-checkbox>
+        </div>
+        <div class="designations">
+            <div><span>Designation</span></div>
+            <md-radio-group [(ngModel)]="player.designation">
+                <md-radio-button *ngFor="let designation of designations;" value="{{designation}}" class="designation">{{designation}}</md-radio-button>
+            </md-radio-group>
+        </div>
+    </md-dialog-content>
+    <md-dialog-actions class="actions">
+        <button type="button" md-button
+            (click)="addPlayer()">{{actionText}}</button>
+        <button type="button" md-button 
+            (click)="dialogRef.close()">CANCEL</button>
+    </md-dialog-actions>

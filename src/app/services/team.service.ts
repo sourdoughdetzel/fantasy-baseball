@@ -9,7 +9,7 @@ export class TeamService {
     getTeams(): Team[]{
         var managers = this.managerService.getLeagueManagers();
         return [
-            {id: 1, rank: 11, name: "The Fuckers", manager: managers[0], players: [ {firstName: 'Jose', lastName: 'Bautista', positions: ["DH","1B"], designation: "NA"}]},
+            {id: 1, rank: 11, name: "The Fuckers", manager: managers[0], players: [ {firstName: 'Jose', lastName: 'Bautista', positions: ["DH","1B"], designation: "None"}]},
             {id: 2, rank: 10, name: "The Cheesers", manager: managers[1], players: []},
             {id: 3, rank: 9, name: "The Poopers", manager: managers[2], players: []},
             {id: 4, rank: 8, name: "The Shitters", manager: managers[3], players: []},
