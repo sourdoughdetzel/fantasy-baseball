@@ -1,0 +1,28 @@
+@import '../team-setup.component.scss';
+
+.player{
+            display: flex;
+            flex-direction: row;
+
+            .name{
+                font-weight:400;
+                margin-right:10px;
+                align-self:center;
+            }
+
+            .positions{
+                align-self:center;
+                color: lightgray;
+                margin: 3px 4px 0px 0;
+                font-size: 12px;
+            }
+}
+
+        .designations{
+            align-self:center;
+            margin-right:10px;
+
+            .designation{
+                margin-right:10px;
+            }
+        }

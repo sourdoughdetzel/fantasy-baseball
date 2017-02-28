@@ -1,7 +1,7 @@
-
+@import '../../../styles.scss';
 
 a{
     &.active{
-        border-bottom: 3px solid rebeccapurple;
+        border-bottom: 2px solid #{map-get($primary, 500)};
     }
 }

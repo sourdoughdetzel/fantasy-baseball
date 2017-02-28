@@ -14,7 +14,6 @@ import * as _ from 'lodash';
 export class TeamSetupComponent implements OnInit{
     teams: Team[];
     selectedTeam: Team;
-    editTeamName: boolean;
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
         private dialog: MdDialog){    }
@@ -22,38 +21,10 @@ export class TeamSetupComponent implements OnInit{
     ngOnInit(){
         this.teams = this.teamService.getTeams();
         this.selectedTeam = this.teams[0];
-        this.editTeamName = false;
     }
 
     showDetails(team: Team): void{
         this.selectedTeam = team;
-        this.editTeamName = false;
     }
 
-    addPlayer(): void{
-        let config = new MdDialogConfig();
-        config.viewContainerRef = this.viewContainerRef;
-
-        let dialogRef = this.dialog.open(AddPlayerDialog, config);
-
-        dialogRef.afterClosed().subscribe(res => this.pushPlayerToTeam(res as Player));
-    }
-
-    editPlayer(player: Player): void{
-        let config = new MdDialogConfig();
-        config.viewContainerRef = this.viewContainerRef;
-        config.data = {player: player};
-        let dialogRef = this.dialog.open(AddPlayerDialog, config);
-        dialogRef.afterClosed().subscribe(res => player = res)
-    }
-
-    deletePlayer(player: Player): void{
-        _.remove(this.selectedTeam.players, (p) => {return p === player;});
-    }
-
-    private pushPlayerToTeam(player: Player) {
-        if(player){
-            this.selectedTeam.players.push(player);
-        }
-    }
 }

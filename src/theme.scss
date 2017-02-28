@@ -1,10 +1,11 @@
-@import '~@angular/material/core/theming/all-theme';
-@include md-core();
+@import '~@angular/material/core/theming/_all-theme.scss';
+@import '~@angular/material/core/theming/_theming.scss';
+@import '~@angular/material/core/theming/_palette.scss';
 
-// Customizations go here, for instance:
-$app-primary: md-palette($md-indigo);
-$app-accent:  md-palette($md-pink, A200, A100, A400);
-$app-warn:    md-palette($md-red);
+@include mat-core();
 
-// Create the theme object (a Sass map containing all of the palettes).
-$app-theme: md-light-theme($app-primary, $app-accent, $app-warn);
+$primary: mat-palette($mat-blue, 800);
+$accent:  mat-palette($mat-orange, 600, A100, A400);
+$warn:    mat-palette($mat-red, 600);
+$theme: mat-light-theme($primary, $accent, $warn);
+@include angular-material-theme($theme);

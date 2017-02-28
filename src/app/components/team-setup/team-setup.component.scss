@@ -1,9 +1,5 @@
 @import '../../app.component.scss';
-
-.teams-container{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
+$light-gray: #eeeeee;
     .compact{
         padding:10px;
     }
@@ -11,45 +7,24 @@
     .minimal{
         padding:0px;
     }
+
+.teams-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+
     .teams-panel{
         width:50%;
         .active{
-            background-color:lightgray;
-            border-color: lightgray;
+            background-color:$light-gray;
+            border-color: $light-gray;
             box-shadow:inherit;
             border-radius:inherit;
         }
     }
     .team-edit{
         width:50%;
-        background-color:lightgray;
+        background-color:$light-gray;
         padding:10px;
-
-        .player{
-            display: flex;
-            flex-direction: row;
-
-            .name{
-                font-weight:400;
-                margin-right:10px;
-                align-self:center;
-            }
-
-            .positions{
-                align-self:center;
-                color: lightgray;
-                margin: 3px 4px 0px 0;
-                font-size: 12px;
-            }
-        }
-
-        .designations{
-            align-self:center;
-            margin-right:10px;
-
-            .designation{
-                margin-right:10px;
-            }
-        }
     }
 }
