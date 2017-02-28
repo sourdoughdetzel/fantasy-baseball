@@ -8,4 +8,5 @@ export interface Player{
     lastName: string;
     positions: Position[];
     designation?: Designation;
+    protected?: boolean;
 }

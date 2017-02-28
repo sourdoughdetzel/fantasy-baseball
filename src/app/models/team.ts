@@ -6,4 +6,5 @@ export interface Team{
     rank: number;
     id: number;
     manager: Manager;
+    bidPoints: number;
 }

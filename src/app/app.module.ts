@@ -17,7 +17,6 @@ import { ManagerService } from "./services/manager.service";
 import { TeamService } from "./services/team.service";
 import { AddPlayerDialog} from './components/team-setup/add-player/add-player.component';
 import { RosterComponent } from './components/team-setup/roster/roster.component';
-import { RfaSetupComponent } from './components/team-setup/rfa-setup/rfa-setup.component';
 
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
@@ -36,8 +35,7 @@ const appRoutes: Routes = [
     RFAProcessComponent,
     TeamSetupComponent,
     AddPlayerDialog,
-    RosterComponent,
-    RfaSetupComponent
+    RosterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,23 +1,5 @@
 @import '../team-setup.component.scss';
 
-.player{
-            display: flex;
-            flex-direction: row;
-
-            .name{
-                font-weight:400;
-                margin-right:10px;
-                align-self:center;
-            }
-
-            .positions{
-                align-self:center;
-                color: lightgray;
-                margin: 3px 4px 0px 0;
-                font-size: 12px;
-            }
-}
-
         .designations{
             align-self:center;
             margin-right:10px;
@@ -26,3 +8,23 @@
                 margin-right:10px;
             }
         }
+
+md-input-container{
+    margin-top:20px;
+}
+
+h4{
+    margin-right:10px;
+}
+
+span{
+    font-size:14px;
+    color: #{map-get($mat-grey, 500)};
+    margin-top:5px;
+    margin-right:10px;
+}
+
+.protected{
+    align-self:center;
+    margin-right:25px;
+}

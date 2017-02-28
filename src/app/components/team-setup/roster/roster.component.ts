@@ -15,14 +15,14 @@ import * as _ from 'lodash';
 export class RosterComponent implements OnInit{
     @Input()
     selectedTeam: Team;
-    
-    editTeamName: boolean;
+
+    edit: boolean;
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
         private dialog: MdDialog){    }
     
     ngOnInit(){
-        this.editTeamName = false;
+        this.edit = false;
     }
 
     addPlayer(): void{
@@ -50,5 +50,17 @@ export class RosterComponent implements OnInit{
         if(player){
             this.selectedTeam.players.push(player);
         }
+    }
+
+    get rfas(): Player[]{
+        return _.filter(this.selectedTeam.players, p => p.designation === "RFA");
+    }
+
+    get rfasLocked(): boolean{
+        return (this.maxProtectedRFAs - _.filter(this.rfas, r => !!r.protected).length) <= 0;
+    }
+
+    get maxProtectedRFAs(): number{
+        return Math.max(0, 4 - this.selectedTeam.rank);
     }
 }

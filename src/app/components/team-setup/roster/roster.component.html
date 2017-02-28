@@ -1,11 +1,14 @@
         <md-toolbar>
-            <h4 *ngIf="!editTeamName">{{selectedTeam.name}} Roster</h4>
-            <md-input-container *ngIf="editTeamName">
-                <input mdInput [(ngModel)]="selectedTeam.name">
+            <h4 *ngIf="!edit">{{selectedTeam.name}}</h4><span *ngIf="!edit">{{selectedTeam.bidPoints}} Bid Points</span>
+            <md-input-container *ngIf="edit">
+                <input placeholder="Team Name" mdInput [(ngModel)]="selectedTeam.name">
             </md-input-container>
-            <button md-icon-button (click)="editTeamName = !editTeamName;">
-                <md-icon *ngIf="!editTeamName">mode_edit</md-icon>
-                <md-icon *ngIf="editTeamName">done</md-icon>
+            <md-input-container *ngIf="edit">
+                <input placeholder="Bid Points" mdInput [(ngModel)]="selectedTeam.bidPoints">
+            </md-input-container>
+            <button md-icon-button (click)="edit = !edit;">
+                <md-icon *ngIf="!edit">mode_edit</md-icon>
+                <md-icon *ngIf="edit">done</md-icon>
             </button>
             <span class="spacer"></span>
             <button md-icon-button (click)="addPlayer()">
@@ -17,12 +20,14 @@
                <label class="name">{{player.firstName + ' ' + player.lastName}} </label>
                <label class="positions" *ngFor="let pos of player.positions;">{{pos + '  '}}</label>
                <span class="spacer"></span>
+               <md-slide-toggle  class="protected" *ngIf="player.designation === 'RFA' && maxProtectedRFAs > 0" [(ngModel)]="player.protected" [disabled]="!player.protected && rfasLocked">Protected</md-slide-toggle>
                <md-radio-group [(ngModel)]="player.designation" class="designations">
                     <md-radio-button class="designation" value="CK">CK</md-radio-button>
                     <md-radio-button class="designation" value="RFA">RFA</md-radio-button>
                     <md-radio-button class="designation" value="IP">IP</md-radio-button>
                     <md-radio-button class="designation" value="None">None</md-radio-button>
                 </md-radio-group>
+                
                 <button md-icon-button (click)="editPlayer(player)">
                     <md-icon>mode_edit</md-icon>
                 </button>

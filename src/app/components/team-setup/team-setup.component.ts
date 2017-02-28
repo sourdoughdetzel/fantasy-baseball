@@ -8,6 +8,7 @@ import {Observable} from 'rxjs/Rx';
 import * as _ from 'lodash';
 
 @Component({
+    selector: 'team-setup',
     templateUrl: './team-setup.component.html',
     styleUrls: ['./team-setup.component.scss']
 })
@@ -19,7 +20,7 @@ export class TeamSetupComponent implements OnInit{
         private dialog: MdDialog){    }
     
     ngOnInit(){
-        this.teams = this.teamService.getTeams();
+        this.teams = _.orderBy(this.teamService.getTeams(), ['rank'], ['asc']);
         this.selectedTeam = this.teams[0];
     }
 
