@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { Manager } from '../../models/manager';
 import {ManagerService} from '../../services/manager.service';
+import {FirebaseListObservable } from 'angularfire2';
 
 @Component({
   selector: 'header',
@@ -8,7 +9,7 @@ import {ManagerService} from '../../services/manager.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent{
-    public managers: Manager[];
+    public managers: FirebaseListObservable<Manager[]>;
     constructor(private managerService: ManagerService){
       this.managers = managerService.getLeagueManagers();
     }
@@ -20,7 +21,6 @@ export class HeaderComponent{
     get managerDisplay(): string{
       return this.manager ? `What up, ${this.manager.firstName}?` : `Who are you?`;
     }
-
     setManager(man: Manager): void {
         this.managerService.setCurrentManager(man);
     }

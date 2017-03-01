@@ -1,25 +1,52 @@
 import { Injectable } from '@angular/core';
 import {Team} from '../models/team';
+import {Player} from '../models/player';
+import {Manager} from '../models/manager';
 import {ManagerService} from './manager.service';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import {Observable} from 'rxjs';
+import * as _ from 'lodash';
 
 @Injectable()
 export class TeamService {
-    constructor(private managerService: ManagerService){}
-
-    getTeams(): Team[]{
-        var managers = this.managerService.getLeagueManagers();
-        return [
-            {id: 1, rank: 11, bidPoints: 2, name: "The Fuckers", manager: managers[0], players: [ {firstName: 'Jose', lastName: 'Bautista', positions: ["DH","1B"], designation: "None"}]},
-            {id: 2, rank: 10, bidPoints: 2, name: "The Cheesers", manager: managers[1], players: []},
-            {id: 3, rank: 9, bidPoints: 2, name: "The Poopers", manager: managers[2], players: []},
-            {id: 4, rank: 8, bidPoints: 2, name: "The Shitters", manager: managers[3], players: []},
-            {id: 5, rank: 7, bidPoints: 2, name: "The Asses", manager: managers[4], players: []},
-            {id: 6, rank: 6, bidPoints: 2, name: "The Buttholes", manager: managers[5], players: []},
-            {id: 7, rank: 5, bidPoints: 2, name: "The Assholes", manager: managers[6], players: []},
-            {id: 8, rank: 4, bidPoints: 2, name: "The Dicks", manager: managers[7], players: []},
-            {id: 9, rank: 3, bidPoints: 2, name: "The Douchers", manager: managers[8], players: []},
-            {id: 10, rank: 2, bidPoints: 2, name: "The Tits", manager: managers[9], players: []},
-            {id: 11, rank: 1, bidPoints: 2, name: "The Piss", manager: managers[10], players: []}
-        ];
+    teamsData: Observable<Team[]>;
+    constructor(private managerService: ManagerService, private af: AngularFire){
+        this.subscribeToTeams();
     }
+
+    private subscribeToTeams(): void{
+        this.teamsData = this.composeTeamData();
+    }
+
+    private composeTeamData(): Observable<Team[]>{
+        return Observable.combineLatest(this.teams, this.managers, this.players, (t, m, p) => {
+            return this.translateTeams(t, m, p);
+        });
+    }
+
+    get teams(): FirebaseListObservable<Team[]>{
+        return this.af.database.list('/teams', {query: {orderByChild: "rank"}});
+    }
+
+    get managers(): FirebaseListObservable<Manager[]>{
+        return this.af.database.list('/managers');
+    }
+
+    get players(): FirebaseListObservable<Player[]>{
+        return this.af.database.list('/players');
+    }
+
+    public getPlayer($key: string): FirebaseObjectObservable<Player>{
+        return this.af.database.object(`/players/${$key}`);
+    }
+
+    private translateTeams(t: Team[], m: Manager[], p: Player[]): Team[]{
+        _.map(t, team => {
+            team.manager = _.find(m, manager => manager.teamId === team.id);
+            team.players = _.filter(p, player => player.teamId === team.id);
+        });
+
+        return t;
+    }
+
 }

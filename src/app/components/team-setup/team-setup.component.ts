@@ -4,6 +4,7 @@ import {Player} from '../../models/player';
 import {TeamService} from '../../services/team.service';
 import { MdDialogConfig, MdDialog } from '@angular/material';
 import {AddPlayerDialog} from './add-player/add-player.component';
+import {FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import {Observable} from 'rxjs/Rx';
 import * as _ from 'lodash';
 
@@ -15,13 +16,21 @@ import * as _ from 'lodash';
 export class TeamSetupComponent implements OnInit{
     teams: Team[];
     selectedTeam: Team;
+
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
         private dialog: MdDialog){    }
     
     ngOnInit(){
-        this.teams = _.orderBy(this.teamService.getTeams(), ['rank'], ['asc']);
-        this.selectedTeam = this.teams[0];
+        this.teamService.teamsData.subscribe(
+            (t) => {
+                let id: number;
+                if(this.selectedTeam)
+                    id = this.selectedTeam.id; 
+                this.teams = t;
+                this.selectedTeam = id ? _.find(this.teams, team => team.id === id) : this.teams[0];
+            }
+        );
     }
 
     showDetails(team: Team): void{

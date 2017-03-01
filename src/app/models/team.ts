@@ -7,4 +7,5 @@ export interface Team{
     id: number;
     manager: Manager;
     bidPoints: number;
+    $key: string;
 }

@@ -19,7 +19,7 @@ export class RosterComponent implements OnInit{
     edit: boolean;
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
-        private dialog: MdDialog){    }
+        private dialog: MdDialog){  }
     
     ngOnInit(){
         this.edit = false;
@@ -39,16 +39,28 @@ export class RosterComponent implements OnInit{
         config.viewContainerRef = this.viewContainerRef;
         config.data = {player: player};
         let dialogRef = this.dialog.open(AddPlayerDialog, config);
-        dialogRef.afterClosed().subscribe(res => player = res)
+        dialogRef.afterClosed().subscribe(res => this.updatePlayer(player));
     }
 
+    updatePlayer(player: Player):void{
+        this.teamService.players.update(player.$key, player);
+    }
+    
     deletePlayer(player: Player): void{
-        _.remove(this.selectedTeam.players, (p) => {return p === player;});
+        this.teamService.players.remove(player.$key);
+    }
+
+    updateTeam(): void{
+        if(this.edit){
+             this.teamService.teams.update(this.selectedTeam.$key, this.selectedTeam);
+        }
+        this.edit = !this.edit;
     }
 
     private pushPlayerToTeam(player: Player) {
         if(player){
-            this.selectedTeam.players.push(player);
+            player.teamId = this.selectedTeam.id;
+            this.teamService.players.push(player);
         }
     }
 

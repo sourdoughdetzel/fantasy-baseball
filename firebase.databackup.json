@@ -1,0 +1,31 @@
+{
+    "managers": [
+            {"id": 1, "firstName": "Andrew", "lastName": "Chong", "teamId": 1},
+            {"id": 2, "firstName": "Ed", "lastName": "Dankanich", "teamId": 2},
+            {"id": 3, "firstName": "Mike", "lastName": "Dankanich", "teamId": 3},
+            {"id": 4, "firstName": "Nick", "lastName": "DeLuca", "teamId": 4},
+            {"id": 5, "firstName": "Andrew", "lastName": "Detzel", "teamId": 5},
+            {"id": 6, "firstName": "Eric", "lastName": "Detzel", "teamId": 6},
+            {"id": 7, "firstName": "Jared", "lastName": "Duncan", "teamId": 7},
+            {"id": 8, "firstName": "Ryan", "lastName": "Frigm", "teamId": 8},
+            {"id": 9, "firstName": "Adam", "lastName": "Halpin", "teamId": 9},
+            {"id": 10, "firstName": "Jeremy", "lastName": "Lehn", "teamId": 10},
+            {"id": 11, "firstName": "Ashley", "lastName": "Vernon", "teamId": 11}
+    ],
+    "teams": [
+            {"id": 1, "rank": 11, "bidPoints": 2, "name": "The Fuckers"},
+            {"id": 2, "rank": 10, "bidPoints": 2, "name": "The Cheesers"},
+            {"id": 3, "rank": 9, "bidPoints": 2, "name": "The Poopers"},
+            {"id": 4, "rank": 8, "bidPoints": 2, "name": "The Shitters"},
+            {"id": 5, "rank": 7, "bidPoints": 2, "name": "The Asses"},
+            {"id": 6, "rank": 6, "bidPoints": 2, "name": "The Buttholes"},
+            {"id": 7, "rank": 5, "bidPoints": 2, "name": "The Assholes"},
+            {"id": 8, "rank": 4, "bidPoints": 2, "name": "The Dicks"},
+            {"id": 9, "rank": 3, "bidPoints": 2, "name": "The Douchers"},
+            {"id": 10, "rank": 2, "bidPoints": 2, "name": "The Tits"},
+            {"id": 11, "rank": 1, "bidPoints": 2, "name": "The Piss"}
+    ],
+    "players": [
+        {"teamId": 11, "firstName": "Jose", "lastName": "Bautista", "positions": ["DH","1B"], "designation": "RFA", "protected": false}
+    ]
+}

@@ -6,7 +6,7 @@
             <md-input-container *ngIf="edit">
                 <input placeholder="Bid Points" mdInput [(ngModel)]="selectedTeam.bidPoints">
             </md-input-container>
-            <button md-icon-button (click)="edit = !edit;">
+            <button md-icon-button (click)="updateTeam()">
                 <md-icon *ngIf="!edit">mode_edit</md-icon>
                 <md-icon *ngIf="edit">done</md-icon>
             </button>
@@ -20,8 +20,8 @@
                <label class="name">{{player.firstName + ' ' + player.lastName}} </label>
                <label class="positions" *ngFor="let pos of player.positions;">{{pos + '  '}}</label>
                <span class="spacer"></span>
-               <md-slide-toggle  class="protected" *ngIf="player.designation === 'RFA' && maxProtectedRFAs > 0" [(ngModel)]="player.protected" [disabled]="!player.protected && rfasLocked">Protected</md-slide-toggle>
-               <md-radio-group [(ngModel)]="player.designation" class="designations">
+               <md-slide-toggle  class="protected" *ngIf="player.designation === 'RFA' && maxProtectedRFAs > 0" [(ngModel)]="player.protected"  (change)="updatePlayer(player)" [disabled]="!player.protected && rfasLocked">Protected</md-slide-toggle>
+               <md-radio-group [(ngModel)]="player.designation" class="designations" (change)="updatePlayer(player)">
                     <md-radio-button class="designation" value="CK">CK</md-radio-button>
                     <md-radio-button class="designation" value="RFA">RFA</md-radio-button>
                     <md-radio-button class="designation" value="IP">IP</md-radio-button>

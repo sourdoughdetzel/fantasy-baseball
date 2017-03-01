@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import {MaterialModule} from "@angular/material";
 import { RouterModule, Routes } from '@angular/router';
 import { LocalStorageModule } from 'angular-2-local-storage';
-
+import { AngularFireModule } from 'angularfire2';
 import 'hammerjs';
 
 import { AppComponent } from './app.component';
@@ -27,6 +27,16 @@ const appRoutes: Routes = [
   }
 ];
 
+export const firebaseConfig = {
+    apiKey: "AIzaSyDcbfYSIzslAOQOfo_uR9-Dg16BFfoJCWk",
+    authDomain: "fantasy-baseball-76422.firebaseapp.com",
+    databaseURL: "https://fantasy-baseball-76422.firebaseio.com",
+    storageBucket: "fantasy-baseball-76422.appspot.com",
+    messagingSenderId: "159655341050"
+};
+
+export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +56,8 @@ const appRoutes: Routes = [
     LocalStorageModule.withConfig({
             prefix: 'fantasy-baseball-app',
             storageType: 'localStorage'
-        })
+        }),
+    AngularFireModule.initializeApp(firebaseConfig)
   ],
   entryComponents:[
     AddPlayerDialog

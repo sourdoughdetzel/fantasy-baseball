@@ -9,4 +9,6 @@ export interface Player{
     positions: Position[];
     designation?: Designation;
     protected?: boolean;
+    teamId: number;
+    $key: string;
 }

@@ -10,6 +10,6 @@
         </md-card>
     </div>
     <div class="team-edit">
-        <roster [selectedTeam]="selectedTeam"></roster>
+        <roster *ngIf="!!selectedTeam" [selectedTeam]="selectedTeam"></roster>
     </div>
 <div>

@@ -7,7 +7,7 @@
     </button>
   </md-toolbar>
   <md-menu #menu="mdMenu">
-      <button md-menu-item *ngFor="let man of managers" (click)="setManager(man)">
+      <button md-menu-item *ngFor="let man of managers | async" (click)="setManager(man)">
         {{ man.firstName + " " + man.lastName }}
       </button>
   </md-menu>
