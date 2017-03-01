@@ -37,4 +37,9 @@ export class TeamSetupComponent implements OnInit{
         this.selectedTeam = team;
     }
 
+    updateRankings(): void{
+        _.forEach(this.teams, (t, i) => {t.rank = i+1;});
+        _.forEach(this.teams, t => this.teamService.teams.update(t.$key, {rank: t.rank}));
+    }
+
 }

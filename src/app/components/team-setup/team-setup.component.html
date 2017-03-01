@@ -1,7 +1,8 @@
 <div class="teams-container">
-    <div class="teams-panel">
-        <md-card *ngFor="let team of teams;" class="compact" [ngClass]="{'active': team === selectedTeam}">
+    <div class="teams-panel" dnd-sortable-container [sortableData]="teams">
+        <md-card *ngFor="let team of teams; let i = index;" class="compact" [ngClass]="{'active': team === selectedTeam}" dnd-sortable [sortableIndex]="i" (onDropSuccess)="updateRankings()">
             <md-card-header>
+                <div class="rank" md-card-avatar>{{team.rank}}</div>
                 <md-card-title>{{team.name}}</md-card-title>
                 <md-card-subtitle>{{team.manager.firstName + ' ' + team.manager.lastName}}</md-card-subtitle>
                 <span class="spacer"></span>

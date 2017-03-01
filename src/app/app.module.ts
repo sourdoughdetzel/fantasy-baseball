@@ -6,6 +6,7 @@ import {MaterialModule} from "@angular/material";
 import { RouterModule, Routes } from '@angular/router';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { AngularFireModule } from 'angularfire2';
+import {DndModule} from 'ng2-dnd';
 import 'hammerjs';
 
 import { AppComponent } from './app.component';
@@ -57,7 +58,8 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
             prefix: 'fantasy-baseball-app',
             storageType: 'localStorage'
         }),
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    DndModule.forRoot(),
   ],
   entryComponents:[
     AddPlayerDialog
