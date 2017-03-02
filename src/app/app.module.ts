@@ -16,6 +16,7 @@ import { TeamSetupComponent } from "./components/team-setup/team-setup.component
 import { RFAProcessComponent } from "./components/rfa-process/rfa-process.component";
 import { ManagerService } from "./services/manager.service";
 import { TeamService } from "./services/team.service";
+import { RfaService} from './services/rfa.service';
 import { AddPlayerDialog} from './components/team-setup/add-player/add-player.component';
 import { RosterComponent } from './components/team-setup/roster/roster.component';
 
@@ -64,7 +65,7 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
   entryComponents:[
     AddPlayerDialog
   ],
-  providers: [ManagerService, TeamService],
+  providers: [ManagerService, TeamService, RfaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
