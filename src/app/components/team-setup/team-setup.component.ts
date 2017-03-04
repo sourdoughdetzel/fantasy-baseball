@@ -38,7 +38,10 @@ export class TeamSetupComponent implements OnInit{
     }
 
     updateRankings(): void{
-        _.forEach(this.teams, (t, i) => {t.rank = i+1;});
+        _.forEach(this.teams, (t, i) => {
+            t.rank = i+1;
+            console.log(t.name + ' ' + t.rank);
+        });
         _.forEach(this.teams, t => this.teamService.teams.update(t.$key, {rank: t.rank}));
     }
 

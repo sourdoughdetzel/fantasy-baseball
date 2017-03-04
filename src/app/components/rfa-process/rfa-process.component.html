@@ -1,16 +1,14 @@
-<div *ngIf="!rfaProcess">
-    The RFA Process has not been started.
-    <button (click)="createProcess()">Start It!</button>
-</div>
-<div *ngIf="!!rfaProcess">
-    There is an RFA Process underway.
-</div>
 
-        <md-card *ngFor="let team of teams;">
-            <md-card-header>
-                <div class="rank" md-card-avatar>{{team.rank}}</div>
-                <md-card-title>{{team.name}}</md-card-title>
-                <md-card-subtitle>{{team.manager.firstName + ' ' + team.manager.lastName}}</md-card-subtitle>
-                <span class="spacer"></span>
-            </md-card-header>
-        </md-card>
+<md-spinner *ngIf="loading" class="loading"></md-spinner>
+<div *ngIf="!loading">
+    <div *ngIf="!rfaProcess" class="need-action-container">
+        <div class="need-action">
+            <h3>The RFA Process has not been started.</h3>
+            <button md-raised-button (click)="createProcess()">Start It!</button>
+        </div>
+    </div>
+    <div *ngIf="!!rfaProcess">
+        <rfa-action-panel [rfaProcess]="rfaProcess" [rfaTeams]="teams" [manager]="manager"></rfa-action-panel>
+        <rfa-teams [rfaTeams]="teams"></rfa-teams>
+    </div>
+</div>

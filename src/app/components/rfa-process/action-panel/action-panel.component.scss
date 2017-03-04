@@ -1,0 +1,21 @@
+@import '../../../app.component.scss';
+.panel{
+    margin-bottom:20px;
+
+    md-card-title{
+        &.not-joined{
+            margin-top: 19px;
+        }
+        font-size: 24px;
+        font-weight: 200;
+    }
+
+    .imready{
+        width:200px;
+        top:12px;
+        background-color:#{map-get($mat-green, 300)};
+        &:hover{
+            background-color:#{map-get($mat-green, 400)};
+        }
+    }
+}

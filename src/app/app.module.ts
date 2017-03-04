@@ -19,6 +19,8 @@ import { TeamService } from "./services/team.service";
 import { RfaService} from './services/rfa.service';
 import { AddPlayerDialog} from './components/team-setup/add-player/add-player.component';
 import { RosterComponent } from './components/team-setup/roster/roster.component';
+import { RfaActionPanelComponent } from './components/rfa-process/action-panel/action-panel.component';
+import { RfaTeamsComponent } from './components/rfa-process/teams/rfa-teams.component';
 
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
@@ -47,7 +49,9 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     RFAProcessComponent,
     TeamSetupComponent,
     AddPlayerDialog,
-    RosterComponent
+    RosterComponent,
+    RfaActionPanelComponent,
+    RfaTeamsComponent
   ],
   imports: [
     BrowserModule,

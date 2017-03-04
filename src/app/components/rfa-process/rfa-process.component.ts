@@ -8,7 +8,8 @@ import {Manager} from '../../models/manager';
 import * as _ from 'lodash';
 
 @Component({
-    templateUrl: './rfa-process.component.html'
+    templateUrl: './rfa-process.component.html',
+    styleUrls: ['./rfa-process.component.scss']
 })
 export class RFAProcessComponent implements OnInit{
 
@@ -16,6 +17,7 @@ export class RFAProcessComponent implements OnInit{
     teams: Team[];
     manager: Manager;
     myTeam: Team;
+    ready: boolean;
 
     constructor(private teamService: TeamService, 
                 private rfaService: RfaService,
@@ -24,29 +26,43 @@ export class RFAProcessComponent implements OnInit{
 
     ngOnInit(){
         this.manager = this.managerService.getCurrentManager();
-        this.setupProcess();
+        this.managerService.managerSubject.subscribe(m => {
+            this.manager = m;
+        });
         this.getTeams();
+        this.setupProcess();
     }
 
     private setupProcess():void{
-        this.rfaService.rfaProcess.subscribe((p) => {
-            if(p.length){
-                this.rfaProcess = p[0];
-                this.rfaService.nominations(this.rfaProcess.$key).subscribe(n => {
-                    this.rfaProcess.nominations = n;
-                });
-            }
+        this.rfaService.currentRfaProcess.subscribe((p) => {
+            this.rfaProcess = p;
         }); 
     }
+
+    // private subscribeToNomination(processKey: string){
+    //     this.rfaService.nominations().subscribe(n => {
+    //         this.rfaProcess.nominations.push(n);
+
+    //     });
+    // }
 
     private getTeams():void{
         this.teamService.teamsData.subscribe(t => {
             this.myTeam = _.find(t, team => team.manager.id === this.manager.id);
             this.teams = t;
+            console.log(t);
         });
     }
 
     createProcess(): void{
-        this.rfaService.createProcess();
+        if(!this.rfaProcess){
+            this.rfaService.createProcess();
+            this.rfaService.managerReady(this.manager.id, this.rfaProcess.$key);
+        }
     }
+
+    get loading(): boolean{
+        return !this.teams || !this.rfaProcess;
+    }
+
 }

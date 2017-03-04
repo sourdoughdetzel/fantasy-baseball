@@ -7,6 +7,7 @@ export interface Nomination{
     nominatorId: number;
     bids: Bid[];
     status?: NominationStatus;
-    compoensationPlayerId?: number;
+    compensationPlayerId?: number;
     rfaProcessKey: string;
+    $key: string;
 }

@@ -37,7 +37,7 @@ export class TeamService {
     }
 
     public getPlayer($key: string): FirebaseObjectObservable<Player>{
-        return this.af.database.object(`/players/${$key}`);
+        return this.af.database.object(`/players`);
     }
 
     private translateTeams(t: Team[], m: Manager[], p: Player[]): Team[]{
