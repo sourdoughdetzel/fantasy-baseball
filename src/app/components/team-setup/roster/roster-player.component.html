@@ -1,0 +1,22 @@
+        <md-card class="minimal">
+            <md-card-header class="player">
+               <label class="name">{{player.firstName + ' ' + player.lastName}} </label>
+               <label class="positions" *ngFor="let pos of player.positions;">{{pos + '  '}}</label>
+               <span class="spacer"></span>
+               <md-slide-toggle  class="protected" *ngIf="player.designation === 'RFA' && maxProtectedRFAs > 0" [(ngModel)]="player.protected"  (change)="updatePlayer(player)" [disabled]="!player.protected && rfasLocked">Protected</md-slide-toggle>
+               <md-radio-group [(ngModel)]="player.designation" class="designations" (change)="updatePlayer(player)">
+                   <md-radio-button class="designation" value="LTK">LTK</md-radio-button>
+                    <md-radio-button class="designation" value="CK">CK</md-radio-button>
+                    <md-radio-button class="designation" value="RFA">RFA</md-radio-button>
+                    <md-radio-button class="designation" value="IP">IP</md-radio-button>
+                    <md-radio-button class="designation" value="Other">Other</md-radio-button>
+                </md-radio-group>
+                
+                <button md-icon-button (click)="editPlayer(player)">
+                    <md-icon>mode_edit</md-icon>
+                </button>
+                <button md-icon-button (click)="deletePlayer(player)">
+                    <md-icon>delete</md-icon>
+                </button>
+            </md-card-header>
+        </md-card>

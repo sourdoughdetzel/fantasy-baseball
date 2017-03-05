@@ -1,10 +1,4 @@
-<div *ngIf="teams.length">
-<md-card *ngFor="let team of teams;">
-    <md-card-header>
-        <div class="rank" md-card-avatar>{{team.rank}}</div>
-        <md-card-title>{{team.name}}</md-card-title>
-        <md-card-subtitle>{{team.manager.firstName + ' ' + team.manager.lastName}}</md-card-subtitle>
-        <span class="spacer"></span>
-    </md-card-header>
-</md-card>
+<div *ngIf="teams.length" class="rfa-teams">
+    <rfa-team class="team" *ngFor="let team of teams; let i = index;" [ngClass]="{'top-row': i < 3}" [team]="team">
+    </rfa-team>
 </div>

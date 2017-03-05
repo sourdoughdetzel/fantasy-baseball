@@ -49,4 +49,12 @@ export class RfaActionPanelComponent implements OnInit{
         
         return `You're in, but we're waiting for ${text} to join`;
     }
+
+    get haventJoinedText(): string{
+        return `You and ${this.remainingManagers - 1} other asshole${this.remainingManagers - 1 > 1 ? 's': ''} haven't joined yet.`;
+    }
+
+    get startLookingText(): string{
+        return `Feel free to start looking through the teams below while we wait for ${this.remainingManagers > 1 ? 'these dickheads' : 'this dickhead'}`;
+    }
 }

@@ -50,7 +50,6 @@ export class RFAProcessComponent implements OnInit{
         this.teamService.teamsData.subscribe(t => {
             this.myTeam = _.find(t, team => team.manager.id === this.manager.id);
             this.teams = t;
-            console.log(t);
         });
     }
 

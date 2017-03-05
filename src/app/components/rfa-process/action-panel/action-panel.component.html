@@ -1,7 +1,7 @@
 <md-card class="panel">
     <div *ngIf="processJoinable">
         <md-card-header>
-            <md-card-title class="not-joined">You and {{remainingManagers - 1}} other assholes haven't joined yet.</md-card-title>
+            <md-card-title class="not-joined">{{haventJoinedText}}</md-card-title>
             <span class="spacer"></span>
             <button class="imready" md-raised-button (click)="imReady()">I'm ready</button>
         </md-card-header>
@@ -9,7 +9,7 @@
     <div *ngIf="!processJoinable && rfaProcess.status !== 'InProgress'">
         <md-card-header>
             <md-card-title>{{remainingManagerText}}</md-card-title>
-            <md-card-subtitle>Feel free to start looking through the teams below while we wait for these dickheads.</md-card-subtitle>
+            <md-card-subtitle>{{startLookingText}}</md-card-subtitle>
         </md-card-header>
     </div>
 </md-card>

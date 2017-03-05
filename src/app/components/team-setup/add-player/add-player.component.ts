@@ -33,7 +33,7 @@ export class AddPlayerDialog implements OnInit {
              });
         }
 
-        this.designations = ["CK", "RFA", "IP", "None"];
+        this.designations = ["CK", "RFA", "IP", "LTK", "Other"];
     }
 
     addPlayer(): void{   

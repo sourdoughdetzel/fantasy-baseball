@@ -1,15 +1,6 @@
 @import '../../app.component.scss';
 @import '../../../styles.scss';
 
-$light-gray: #eeeeee;
-    .compact{
-        padding:10px;
-    }
-
-    .minimal{
-        padding:0px;
-    }
-
 .player{
             display: flex;
             flex-direction: row;
@@ -22,7 +13,7 @@ $light-gray: #eeeeee;
 
             .positions{
                 align-self:center;
-                color: lightgray;
+                color: $medium-gray;
                 margin: 3px 4px 0px 0;
                 font-size: 12px;
             }
@@ -40,18 +31,6 @@ $light-gray: #eeeeee;
             border-color: $light-gray;
             box-shadow:inherit;
             border-radius:inherit;
-        }
-
-        .rank{
-            margin-top:4px;
-            color: white;
-            border-radius: 50%;
-            text-align: center;
-            box-sizing: border-box;
-            padding-top: 5px;
-            width: 30px;
-            height: 30px;
-            background-color: #{map-get($primary, 500)}
         }
 
         md-card{

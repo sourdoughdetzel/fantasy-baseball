@@ -21,6 +21,12 @@ import { AddPlayerDialog} from './components/team-setup/add-player/add-player.co
 import { RosterComponent } from './components/team-setup/roster/roster.component';
 import { RfaActionPanelComponent } from './components/rfa-process/action-panel/action-panel.component';
 import { RfaTeamsComponent } from './components/rfa-process/teams/rfa-teams.component';
+import {DesignationPipe} from './components/rfa-process/teams/designation.pipe';
+import {PlayerComponent} from './components/rfa-process/teams/player/player.component';
+import {PlayerGroupComponent} from './components/rfa-process/teams/player/player-group.component';
+import {RfaTeamComponent} from './components/rfa-process/teams/rfa-team.component'
+import {PositionPipe} from './components/team-setup/roster/position.pipe';
+import {RosterPlayerComponent} from './components/team-setup/roster/roster-player.component';
 
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
@@ -51,7 +57,13 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     AddPlayerDialog,
     RosterComponent,
     RfaActionPanelComponent,
-    RfaTeamsComponent
+    RfaTeamsComponent,
+    PlayerComponent,
+    PlayerGroupComponent,
+    RfaTeamComponent,
+    DesignationPipe,
+    PositionPipe,
+    RosterPlayerComponent
   ],
   imports: [
     BrowserModule,

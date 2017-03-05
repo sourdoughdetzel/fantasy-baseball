@@ -24,3 +24,23 @@
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
 }
+
+    .compact{
+        padding:10px;
+    }
+
+    .minimal{
+        padding:0px;
+    }
+
+    .rank{
+            margin-top:4px;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            box-sizing: border-box;
+            padding-top: 5px;
+            width: 30px;
+            height: 30px;
+            background-color: #{map-get($primary, 500)}
+        }

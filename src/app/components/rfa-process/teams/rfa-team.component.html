@@ -1,0 +1,22 @@
+<md-card class="team-card minimal">
+            <md-card-header>
+                <div class="rank" md-card-avatar>{{team.rank}}</div>
+                <md-card-title>
+                    {{team.manager.nickName}}
+                    <label>{{team.bidPoints}} BPs</label>
+                </md-card-title>
+                <span class="spacer"></span>
+                <button md-icon-button class="expand" (click)="showDetails = !showDetails">
+                    <md-icon>keyboard_arrow_{{showDetails ? 'up' : 'down'}}</md-icon>
+                </button>
+            </md-card-header>
+        </md-card>
+        <div class="players">
+            <player-group [players]="team.players" [designation]="'RFA'" [manager]="team.manager"></player-group>
+            <div [hidden]="!showDetails">
+                <player-group [players]="team.players" [designation]="'Other'" [manager]="team.manager"></player-group>
+                <player-group [players]="team.players" [designation]="'LTK'" [manager]="team.manager"></player-group>
+                <player-group [players]="team.players" [designation]="'CK'" [manager]="team.manager"></player-group>
+                <player-group [players]="team.players" [designation]="'IP'" [manager]="team.manager"></player-group>
+            </div>
+        </div>

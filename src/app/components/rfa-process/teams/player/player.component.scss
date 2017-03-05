@@ -1,0 +1,16 @@
+@import '../../../../app.component.scss';
+
+md-card{
+    padding: 5px 10px;
+    font-size: 13px;
+    font-weight: 200;
+    background-color: white;
+    border-radius:inherit;
+
+    .positions{
+        color: $medium-gray;
+        margin: 3px 4px 0px 0;
+        font-size: 11px;
+    }
+
+}

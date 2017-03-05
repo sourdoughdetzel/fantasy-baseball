@@ -1,13 +1,9 @@
 @import '../team-setup.component.scss';
 
-        .designations{
-            align-self:center;
-            margin-right:10px;
-
-            .designation{
-                margin-right:10px;
-            }
-        }
+.position-type{
+    background-color:#{map-get($primary, 300)};
+    margin-top:10px;
+}
 
 md-input-container{
     margin-top:20px;
@@ -24,7 +20,3 @@ span{
     margin-right:10px;
 }
 
-.protected{
-    align-self:center;
-    margin-right:25px;
-}
