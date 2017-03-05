@@ -1,7 +1,9 @@
-import {Component, Input} from '@angular/core';
+import {Component, ViewContainerRef, Input} from '@angular/core';
 import {Player} from '../../../models/player';
 import {Team} from '../../../models/team';
 import {TeamService} from '../../../services/team.service';
+import { MdDialogConfig, MdDialog } from '@angular/material';
+import {AddPlayerDialog} from '../add-player/add-player.component';
 import * as _ from 'lodash';
 
 @Component({
@@ -14,7 +16,9 @@ export class RosterPlayerComponent {
     @Input()team: Team;
     edit: boolean;
 
-    constructor(private teamService: TeamService){}
+    constructor(private teamService: TeamService,
+        private viewContainerRef: ViewContainerRef,
+        private dialog: MdDialog){}
 
      updatePlayer(player: Player):void{
         this.teamService.players.update(player.$key, player);
@@ -48,5 +52,13 @@ export class RosterPlayerComponent {
 
     get maxProtectedRFAs(): number{
         return Math.max(0, 4 - this.team.rank);
+    }
+
+    editPlayer(player: Player): void{
+        let config = new MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
+        config.data = {player: player};
+        let dialogRef = this.dialog.open(AddPlayerDialog, config);
+        dialogRef.afterClosed().subscribe(res => this.updatePlayer(player));
     }
 }

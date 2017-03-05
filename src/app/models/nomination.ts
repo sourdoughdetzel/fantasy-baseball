@@ -1,5 +1,5 @@
 import {Bid} from './bid';
-export type NominationStatus = "Fail" | "Success";
+export type NominationStatus = "Fail" | "InProgress" | "Success";
 
 export interface Nomination{
     playerId: number;
@@ -9,5 +9,6 @@ export interface Nomination{
     status?: NominationStatus;
     compensationPlayerId?: number;
     rfaProcessKey: string;
+    nominationDate: Date;
     $key: string;
 }

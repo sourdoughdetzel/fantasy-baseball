@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {TeamService} from '../../services/team.service';
 import {RfaService} from '../../services/rfa.service';
 import {ManagerService} from '../../services/manager.service';
+import {NominationService} from '../../services/nomination.service';
 import {RfaProcess} from '../../models/rfa-process';
 import {Team} from '../../models/team';
 import {Manager} from '../../models/manager';
@@ -21,7 +22,8 @@ export class RFAProcessComponent implements OnInit{
 
     constructor(private teamService: TeamService, 
                 private rfaService: RfaService,
-                private managerService: ManagerService){
+                private managerService: ManagerService,
+                private nominationService: NominationService){
     }
 
     ngOnInit(){
@@ -36,20 +38,27 @@ export class RFAProcessComponent implements OnInit{
     private setupProcess():void{
         this.rfaService.currentRfaProcess.subscribe((p) => {
             this.rfaProcess = p;
+            this.updateProcessToBidding();
         }); 
     }
 
-    // private subscribeToNomination(processKey: string){
-    //     this.rfaService.nominations().subscribe(n => {
-    //         this.rfaProcess.nominations.push(n);
-
-    //     });
-    // }
+    private updateProcessToBidding():void{
+        if(this.rfaProcess && 
+            this.teams && 
+            this.rfaProcess.readyManagers &&
+            this.rfaProcess.status === "Created" &&
+            this.teams.length === this.rfaProcess.readyManagers.length
+        ){
+            this.rfaProcess.status = "Bidding";
+            this.rfaService.updateProcess(this.rfaProcess);   
+        }
+    }
 
     private getTeams():void{
         this.teamService.teamsData.subscribe(t => {
             this.myTeam = _.find(t, team => team.manager.id === this.manager.id);
             this.teams = t;
+            this.updateProcessToBidding();
         });
     }
 
@@ -63,5 +72,8 @@ export class RFAProcessComponent implements OnInit{
     get loading(): boolean{
         return !this.teams || !this.rfaProcess;
     }
+
+    
+
 
 }

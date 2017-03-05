@@ -3,6 +3,7 @@ import {RfaProcess} from '../../../models/rfa-process';
 import {Team} from '../../../models/team';
 import {Manager} from '../../../models/manager';
 import {RfaService} from '../../../services/rfa.service';
+import {NominationService} from '../../../services/nomination.service';
 
 import * as _ from 'lodash';
 
@@ -16,7 +17,7 @@ export class RfaActionPanelComponent implements OnInit{
     @Input('rfaTeams') teams: Team[];
     @Input() manager: Manager;
 
-    constructor(private rfaService: RfaService){}
+    constructor(private rfaService: RfaService, private nominationService: NominationService){}
 
     ngOnInit(){
     }
@@ -51,10 +52,31 @@ export class RfaActionPanelComponent implements OnInit{
     }
 
     get haventJoinedText(): string{
+        if(this.remainingManagers === 1)
+            return `You're the only asshole who hasn't joined yet.`;
+
         return `You and ${this.remainingManagers - 1} other asshole${this.remainingManagers - 1 > 1 ? 's': ''} haven't joined yet.`;
     }
 
     get startLookingText(): string{
         return `Feel free to start looking through the teams below while we wait for ${this.remainingManagers > 1 ? 'these dickheads' : 'this dickhead'}`;
     }
+
+    get processInProgress(): boolean{
+        return this.rfaProcess.status === "Bidding";
+    }
+
+    get nominatingManager(): Manager{
+        return (this.processInProgress && !this.biddingInProgress) ? this.nominationService.nextNominator(this.rfaProcess, this.teams) : null;
+    }
+
+    get biddingInProgress(): boolean{
+        let lastNomination = this.nominationService.getLastNomination(this.rfaProcess);
+        return (!lastNomination) ? false : (lastNomination.status === "InProgress");
+    }
+    
+    get myNomination(): boolean{
+        return this.nominatingManager.id === this.manager.id;
+    }
+
 }

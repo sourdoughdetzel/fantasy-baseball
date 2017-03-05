@@ -1,15 +1,34 @@
-<md-card class="panel">
-    <div *ngIf="processJoinable">
-        <md-card-header>
-            <md-card-title class="not-joined">{{haventJoinedText}}</md-card-title>
-            <span class="spacer"></span>
-            <button class="imready" md-raised-button (click)="imReady()">I'm ready</button>
-        </md-card-header>
+<md-card class="panel" [ngSwitch]="rfaProcess.status">
+    <div *ngSwitchDefault>
+        <div *ngIf="processJoinable">
+            <md-card-header>
+                <md-card-title class="not-joined">{{haventJoinedText}}</md-card-title>
+                <span class="spacer"></span>
+                <button class="imready" md-raised-button (click)="imReady()">I'm ready</button>
+            </md-card-header>
+        </div>
+        <div *ngIf="!processJoinable && rfaProcess.status !== 'InProgress'">
+            <md-card-header>
+                <md-card-title>{{remainingManagerText}}</md-card-title>
+                <md-card-subtitle>{{startLookingText}}</md-card-subtitle>
+            </md-card-header>
+        </div>
     </div>
-    <div *ngIf="!processJoinable && rfaProcess.status !== 'InProgress'">
-        <md-card-header>
-            <md-card-title>{{remainingManagerText}}</md-card-title>
-            <md-card-subtitle>{{startLookingText}}</md-card-subtitle>
-        </md-card-header>
+    <div *ngSwitchCase="'Bidding'">
+        <div *ngIf="myNomination">
+            <md-card-header>
+                <md-card-title>It's your turn to nominate someone!</md-card-title>
+                <md-card-subtitle>Click 'Nominate' on an RFA below</md-card-subtitle>
+            </md-card-header>
+        </div>
+        <div *ngIf="!myNomination">
+            <md-card-header>
+                <md-card-title>Waiting on {{nominatingManager.nickName}} to nominate someone for bidding</md-card-title>
+                <md-card-subtitle>Give them a few seconds, then berate them soundly</md-card-subtitle>
+            </md-card-header>
+        </div>
+    </div>
+    <div *ngSwitchCase="'Completed'">
+
     </div>
 </md-card>
