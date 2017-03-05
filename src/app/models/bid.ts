@@ -1,6 +1,6 @@
 export interface Bid{
     nominationKey: string;
-    managerId: number;
+    managerKey: string;
     points: number;
     $key: string;
 }

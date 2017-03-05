@@ -6,20 +6,17 @@ import {Observable, Subject} from 'rxjs';
 
 @Injectable()
 export class ManagerService {
-    managerSubject: Subject<Manager>;
 
     constructor(private localStorageService: LocalStorageService, private af: AngularFire){
-        this.managerSubject = new Subject<Manager>();
     }
     private key: string = "#!ffbManager!#";
 
-    getCurrentManager(): Manager {
+    get currentManager(): Manager {
         return this.localStorageService.get(this.key) as Manager;
     }
 
     setCurrentManager(manager: Manager): void {
         this.localStorageService.set(this.key, manager);
-        this.managerSubject.next(manager);
     }
 
     getLeagueManagers(): FirebaseListObservable<Manager[]>{

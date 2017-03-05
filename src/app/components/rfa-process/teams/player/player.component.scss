@@ -6,10 +6,29 @@ md-card{
     font-weight: 200;
     background-color: white;
     border-radius:inherit;
+    display: flex;
+    flex-direction: row;
+    &:hover{
+        background-color:#{map-get($primary, 300)};
+        opacity:.8;
+    }
+    .name{
+        margin-right:5px;
+    }
 
+    .nominate{
+        height: 15px;
+        font-size: 11px;
+        line-height: inherit;
+        font-weight: 300;
+        background-color:#{map-get($mat-green, 300)};
+        &:hover{
+            background-color:#{map-get($mat-green, 400)};
+        }
+    }
     .positions{
         color: $medium-gray;
-        margin: 3px 4px 0px 0;
+        margin: 2px 4px 0px 0;
         font-size: 11px;
     }
 

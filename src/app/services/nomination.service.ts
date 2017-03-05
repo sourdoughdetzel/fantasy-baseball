@@ -10,6 +10,8 @@ export class NominationService{
     private maxNominators : number = 3;
 
     nextNominator(process: RfaProcess, teams: Team[]): Manager{
+        if(!this.processInProgress(process) || this.biddingInProgress(process))return null;
+
         let eligibleTeams = this.eligibleManagers(teams);
         let lastNominatingTeam = this.getLastNominatingTeam(process, teams);
         if(!lastNominatingTeam) return eligibleTeams[0].manager;
@@ -34,10 +36,20 @@ export class NominationService{
     private getLastNominatingTeam(process: RfaProcess, teams: Team[]): Team{
         let lastNomination = this.getLastNomination(process);
         if(!lastNomination) return null;
-        return _.find(teams, t => t.manager.id === lastNomination.nominatorId);
+        return _.find(teams, t => t.manager.$key === lastNomination.nominatorKey);
     }
 
     getLastNomination(process: RfaProcess): Nomination{
         return _.orderBy(process.nominations, ["nominationDate"], ["desc"])[0];
     }   
+
+    private processInProgress(rfaProcess: RfaProcess): boolean{
+        return rfaProcess.status === "Bidding";
+    }
+
+    private biddingInProgress(rfaProcess: RfaProcess): boolean{
+        let lastNomination = this.getLastNomination(rfaProcess);
+        return (!lastNomination) ? false : (lastNomination.status === "InProgress");
+    }
+
 }

@@ -2,13 +2,13 @@ import {Bid} from './bid';
 export type NominationStatus = "Fail" | "InProgress" | "Success";
 
 export interface Nomination{
-    playerId: number;
-    ownerId: number;
-    nominatorId: number;
+    playerKey: string;
+    ownerKey: number;
+    nominatorKey: number;
     bids: Bid[];
     status?: NominationStatus;
-    compensationPlayerId?: number;
+    compensationPlayerKey?: string;
     rfaProcessKey: string;
-    nominationDate: Date;
-    $key: string;
+    nominationDate: number;
+    $key?: string;
 }

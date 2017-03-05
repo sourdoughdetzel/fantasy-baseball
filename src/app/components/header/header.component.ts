@@ -16,7 +16,7 @@ export class HeaderComponent{
     title = "Fantasy Baseball";
 
     get manager(): Manager{
-      return this.managerService.getCurrentManager();
+      return this.managerService.currentManager;
     }
     get managerDisplay(): string{
       return this.manager ? `What up, ${this.manager.firstName}?` : `Who are you?`;

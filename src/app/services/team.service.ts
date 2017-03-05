@@ -9,18 +9,17 @@ import * as _ from 'lodash';
 
 @Injectable()
 export class TeamService {
-    teamsData: Observable<Team[]>;
+    teamsData: Team[];
     constructor(private managerService: ManagerService, private af: AngularFire){
         this.subscribeToTeams();
     }
 
-    private subscribeToTeams(): void{
-        this.teamsData = this.composeTeamData();
-    }
 
-    private composeTeamData(): Observable<Team[]>{
-        return Observable.combineLatest(this.teams, this.managers, this.players, (t, m, p) => {
+    private subscribeToTeams(): void{
+        Observable.combineLatest(this.teams, this.managers, this.players, (t, m, p) => {
             return this.translateTeams(t, m, p);
+        }).subscribe(t => {
+            this.teamsData = t;
         });
     }
 

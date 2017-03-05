@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewContainerRef} from "@angular/core";
+import {Component, ViewContainerRef} from "@angular/core";
 import {Team} from '../../models/team';
 import {Player} from '../../models/player';
 import {TeamService} from '../../services/team.service';
@@ -13,24 +13,22 @@ import * as _ from 'lodash';
     templateUrl: './team-setup.component.html',
     styleUrls: ['./team-setup.component.scss']
 })
-export class TeamSetupComponent implements OnInit{
-    teams: Team[];
+export class TeamSetupComponent{
     selectedTeam: Team;
 
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
         private dialog: MdDialog){    }
-    
-    ngOnInit(){
-        this.teamService.teamsData.subscribe(
-            (t) => {
-                let id: number;
-                if(this.selectedTeam)
-                    id = this.selectedTeam.id; 
-                this.teams = t;
-                this.selectedTeam = id ? _.find(this.teams, team => team.id === id) : this.teams[0];
-            }
-        );
+
+    get teams(): Team[]{
+        let t = this.teamService.teamsData;
+        if(!t || !t.length) return [];
+
+        let id: number;
+        if(this.selectedTeam)
+             id = this.selectedTeam.id; 
+        this.selectedTeam = id ? _.find(t, team => team.id === id) : t[0];
+        return t;
     }
 
     showDetails(team: Team): void{

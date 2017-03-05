@@ -12,11 +12,7 @@ import * as _ from 'lodash';
     templateUrl: './rfa-process.component.html',
     styleUrls: ['./rfa-process.component.scss']
 })
-export class RFAProcessComponent implements OnInit{
-
-    rfaProcess: RfaProcess;
-    teams: Team[];
-    manager: Manager;
+export class RFAProcessComponent {
     myTeam: Team;
     ready: boolean;
 
@@ -26,20 +22,12 @@ export class RFAProcessComponent implements OnInit{
                 private nominationService: NominationService){
     }
 
-    ngOnInit(){
-        this.manager = this.managerService.getCurrentManager();
-        this.managerService.managerSubject.subscribe(m => {
-            this.manager = m;
-        });
-        this.getTeams();
-        this.setupProcess();
+    get manager(): Manager{
+        return this.managerService.currentManager;
     }
 
-    private setupProcess():void{
-        this.rfaService.currentRfaProcess.subscribe((p) => {
-            this.rfaProcess = p;
-            this.updateProcessToBidding();
-        }); 
+    get rfaProcess(): RfaProcess{
+        return this.rfaService.currentRfaProcessData;
     }
 
     private updateProcessToBidding():void{
@@ -54,12 +42,10 @@ export class RFAProcessComponent implements OnInit{
         }
     }
 
-    private getTeams():void{
-        this.teamService.teamsData.subscribe(t => {
-            this.myTeam = _.find(t, team => team.manager.id === this.manager.id);
-            this.teams = t;
-            this.updateProcessToBidding();
-        });
+    get teams(): Team[]{
+        let t = this.teamService.teamsData;
+        this.myTeam = _.find(t, team => team.manager.id === this.manager.id);
+        return t;
     }
 
     createProcess(): void{
@@ -72,8 +58,5 @@ export class RFAProcessComponent implements OnInit{
     get loading(): boolean{
         return !this.teams || !this.rfaProcess;
     }
-
-    
-
 
 }

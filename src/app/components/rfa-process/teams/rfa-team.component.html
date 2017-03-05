@@ -12,11 +12,11 @@
             </md-card-header>
         </md-card>
         <div class="players">
-            <player-group [players]="team.players" [designation]="'RFA'" [manager]="team.manager"></player-group>
+            <player-group [players]="team.players" [designation]="'RFA'"></player-group>
             <div [hidden]="!showDetails">
-                <player-group [players]="team.players" [designation]="'Other'" [manager]="team.manager"></player-group>
-                <player-group [players]="team.players" [designation]="'LTK'" [manager]="team.manager"></player-group>
-                <player-group [players]="team.players" [designation]="'CK'" [manager]="team.manager"></player-group>
-                <player-group [players]="team.players" [designation]="'IP'" [manager]="team.manager"></player-group>
+                <player-group [players]="team.players" [designation]="'Other'"></player-group>
+                <player-group [players]="team.players" [designation]="'LTK'"></player-group>
+                <player-group [players]="team.players" [designation]="'CK'"></player-group>
+                <player-group [players]="team.players" [designation]="'IP'"></player-group>
             </div>
         </div>
