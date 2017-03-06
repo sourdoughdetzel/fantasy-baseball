@@ -1,5 +1,5 @@
 import {Bid} from './bid';
-export type NominationStatus = "Fail" | "InProgress" | "Success";
+export type NominationStatus = "Fail" | "InProgress" | "PendingCompensation" | "Complete";
 
 export interface Nomination{
     playerKey: string;

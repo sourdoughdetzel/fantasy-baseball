@@ -1,0 +1,10 @@
+@import '../../../../app.component.scss';
+
+.imready{
+        width:200px;
+        top:12px;
+        background-color:#{map-get($mat-green, 300)};
+        &:hover{
+            background-color:#{map-get($mat-green, 400)};
+        }
+    }

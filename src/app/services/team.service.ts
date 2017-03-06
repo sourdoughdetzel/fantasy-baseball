@@ -10,8 +10,10 @@ import * as _ from 'lodash';
 @Injectable()
 export class TeamService {
     teamsData: Team[];
+    playersData: Player[];
     constructor(private managerService: ManagerService, private af: AngularFire){
         this.subscribeToTeams();
+        this.subscribeToPlayers();
     }
 
 
@@ -23,6 +25,12 @@ export class TeamService {
         });
     }
 
+    private subscribeToPlayers(): void{
+        this.players.subscribe(p => {
+            this.playersData = p;
+        });
+    }
+    
     get teams(): FirebaseListObservable<Team[]>{
         return this.af.database.list('/teams', {query: {orderByChild: "rank"}});
     }

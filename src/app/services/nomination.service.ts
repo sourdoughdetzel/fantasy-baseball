@@ -8,22 +8,22 @@ import * as _ from "lodash";
 @Injectable()
 export class NominationService{
     private maxNominators : number = 3;
-
+    private defaultNominator: any = {id: -1};
     nextNominator(process: RfaProcess, teams: Team[]): Manager{
-        if(!this.processInProgress(process) || this.biddingInProgress(process))return null;
-
+        if(!this.processInProgress(process) || this.biddingInProgress(process))return this.defaultNominator;
+ 
         let eligibleTeams = this.eligibleManagers(teams);
         let lastNominatingTeam = this.getLastNominatingTeam(process, teams);
         if(!lastNominatingTeam) return eligibleTeams[0].manager;
 
-        let nominatorIdx = _.indexOf(eligibleTeams, lastNominatingTeam);
+        let nominatorIdx = _.indexOf(eligibleTeams, lastNominatingTeam) + 1;
         let teamIdx: number;
-        if(nominatorIdx === -1){
+        if(nominatorIdx === 0){
             let lowerRankedTeams = _.filter(eligibleTeams, t => t.rank > lastNominatingTeam.rank);
             teamIdx = lowerRankedTeams ? _.indexOf(eligibleTeams, lowerRankedTeams[0]) : 0;
         }
         else{
-            teamIdx = (nominatorIdx === (this.maxNominators - 1)) ? 0 : nominatorIdx;
+            teamIdx = (nominatorIdx >= (this.maxNominators)) ? 0 : nominatorIdx;
         }
        
         return eligibleTeams[teamIdx].manager;
@@ -36,7 +36,7 @@ export class NominationService{
     private getLastNominatingTeam(process: RfaProcess, teams: Team[]): Team{
         let lastNomination = this.getLastNomination(process);
         if(!lastNomination) return null;
-        return _.find(teams, t => t.manager.$key === lastNomination.nominatorKey);
+        return _.find(teams, t => t.manager.id === lastNomination.nominatorKey);
     }
 
     getLastNomination(process: RfaProcess): Nomination{
@@ -52,4 +52,8 @@ export class NominationService{
         return (!lastNomination) ? false : (lastNomination.status === "InProgress");
     }
 
+    requiresCompensation(nomination: Nomination, winner: Team, teams: Team[]): boolean{
+        let owner = _.find(teams, t => t.manager.id === nomination.ownerKey);
+        return winner.rank > owner.rank;
+    }
 }

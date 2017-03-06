@@ -51,7 +51,6 @@ export class PlayerComponent {
             rfaProcessKey: this.rfaProcess.$key,
             nominationDate: new Date().getTime()
         };
-        console.log(nomination);
         this.rfaService.createNomination(nomination);
     }
 }

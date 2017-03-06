@@ -1,0 +1,13 @@
+<div *ngIf="processJoinable">
+            <md-card-header>
+                <md-card-title class="not-joined">{{haventJoinedText}}</md-card-title>
+                <span class="spacer"></span>
+                <button class="imready" md-raised-button (click)="imReady()">I'm ready</button>
+            </md-card-header>
+        </div>
+        <div *ngIf="!processJoinable && rfaProcess.status !== 'InProgress'">
+            <md-card-header>
+                <md-card-title>{{remainingManagerText}}</md-card-title>
+                <md-card-subtitle>{{startLookingText}}</md-card-subtitle>
+            </md-card-header>
+        </div>

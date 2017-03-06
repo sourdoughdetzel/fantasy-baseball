@@ -34,6 +34,13 @@ export class RosterComponent implements OnInit{
         dialogRef.afterClosed().subscribe(res => this.pushPlayerToTeam(res as Player));
     }
 
+    updateTeam(): void{
+        if(this.edit){
+             this.teamService.teams.update(this.selectedTeam.$key, this.selectedTeam);
+        }
+        this.edit = !this.edit;
+    }
+
     private pushPlayerToTeam(player: Player) {
         if(player){
             player.teamId = this.selectedTeam.id;

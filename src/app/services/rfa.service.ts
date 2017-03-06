@@ -12,10 +12,7 @@ export class RfaService{
     currentNominationData: Observable<Nomination>;
 
     constructor(private af: AngularFire){
-        console.log('fired constructor');
         this.setCurrentRfaProcess();
-        this.setupNominations();
-        this.setupBids();
     }
 
     get rfaProcesses(): FirebaseListObservable<RfaProcess[]>{
@@ -30,15 +27,12 @@ export class RfaService{
             }
             return process;
         }).subscribe(p => {
+            let subscribeToNominations: boolean = !this.currentRfaProcessData;
             this.currentRfaProcessData = p;
-        });
-    }
-    
-    private setupNominations() : void{
-        this.af.database.list('/nominations').map(n => {
-            if(this.currentRfaProcessData){
-                this.currentRfaProcessData.nominations = _.filter((n as Nomination[]), nom => nom.rfaProcessKey === this.currentRfaProcessData.$key);
+            if(subscribeToNominations){
+                this.processNominations(p);
             }
+            
         });
     }
 
@@ -49,12 +43,14 @@ export class RfaService{
         }});
     }
 
-    processNominations(process: RfaProcess): Observable<Nomination[]>{
-        return Observable.combineLatest(this.getProcessNominations(process.$key), this.allBids, (n, b) => {
+    processNominations(process: RfaProcess): void{
+        Observable.combineLatest(this.getProcessNominations(process.$key), this.allBids, (n, b) => {
             return _.map(n, nomination => {
-                nomination.bids = _.filter(b, bid => {bid.nominationKey === nomination.$key});
+                nomination.bids = _.filter(b, bid => {return bid.nominationKey === nomination.$key;});
                 return nomination;
             });
+        }).subscribe(n => {
+           this.currentRfaProcessData.nominations = n;  
         });
     }
 
@@ -66,15 +62,6 @@ export class RfaService{
         return this.af.database.list('/bids');
     }
 
-    private setupBids(): void{
-        this.allBids.map(b => {
-            if(this.currentRfaProcessData && this.currentRfaProcessData.nominations){
-                _.forEach(this.currentRfaProcessData.nominations, n => {
-                    n.bids = _.filter((b as Bid[]), bid => bid.nominationKey === n.$key);
-                })
-            }
-        });
-    }
     createProcess(): void{
         let process: RfaProcess = {
             status: "Created",

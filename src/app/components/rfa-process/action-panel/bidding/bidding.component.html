@@ -1,0 +1,39 @@
+<div *ngIf="!!lastNomination">
+    <div [ngSwitch]="lastNomination.status">
+        <div *ngSwitchDefault>
+                <div *ngIf="myNomination">
+                <md-card-header>
+                    <md-card-title>It's your turn to nominate someone!</md-card-title>
+                    <md-card-subtitle>Click 'Nominate' on an RFA below</md-card-subtitle>
+                </md-card-header>
+            </div>
+            <div *ngIf="!myNomination">
+                <md-card-header>
+                    <md-card-title>Waiting on {{nominatingManager.nickName}} to nominate someone for bidding</md-card-title>
+                    <md-card-subtitle>Give them a few seconds, then berate them soundly</md-card-subtitle>
+                </md-card-header>
+            </div>
+        </div>
+        <div *ngSwitchCase="'InProgress'">
+            <md-card-header>
+                    <md-card-title>
+                        <label class="nominated">{{nominatedPlayer.firstName}} {{nominatedPlayer.lastName}}</label> is on the block.
+                    </md-card-title>
+                    <md-card-subtitle>{{winningBidText}}</md-card-subtitle>
+                    <span class="spacer"></span>
+                    <div *ngIf="canBid && nextToBid" class="bid-container">
+                        <md-input-container >
+                            <label>Points</label>
+                            <input mdInput type="number" [(ngModel)]="bidPoints" min="1" max="2" />
+                        </md-input-container>
+                        <button class="bid" md-raised-button (click)="bid()">Bid</button>
+                        <button class="not-interested" md-raised-button (click)="passOnThisGuy()">Fuck this guy</button>
+                    </div>
+                    <div *ngIf="!(canBid && nextToBid)" class="message-container">
+                        <label class="bid-message small" *ngIf="!canBid">You don't have enough bid-points, or you aren't ranked high enough to win this player</label>
+                        <label class="bid-message" *ngIf="canBid && !nextToBid">Others are bidding, hold tight</label>
+                    </div>
+            </md-card-header>
+        </div>
+    </div>
+</div>

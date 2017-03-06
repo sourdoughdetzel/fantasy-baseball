@@ -28,13 +28,6 @@ export class RosterPlayerComponent {
         this.teamService.players.remove(player.$key);
     }
 
-    updateTeam(): void{
-        if(this.edit){
-             this.teamService.teams.update(this.team.$key, this.team);
-        }
-        this.edit = !this.edit;
-    }
-
     private pushPlayerToTeam(player: Player) {
         if(player){
             player.teamId = this.team.id;
