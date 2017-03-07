@@ -9,7 +9,8 @@ import {Team} from '../../../../models/team';
 import {Manager} from '../../../../models/manager';
 import {Nomination} from '../../../../models/nomination';
 import {Player} from '../../../../models/player';
-import {Bid} from '../../../../models/bid';
+import {Bid, BidTeam} from '../../../../models/bid';
+import {Observable} from 'rxjs';
 import * as _ from 'lodash';
 
 @Component({
@@ -27,6 +28,7 @@ export class BiddingComponent implements OnInit {
                 private nominationService: NominationService,
                 private teamService: TeamService,
                 private bidService: BidService) { 
+                    
                 }
 
   ngOnInit() {
@@ -68,12 +70,29 @@ export class BiddingComponent implements OnInit {
     }
 
     get winningBidText(): string{
-        let bestBid = this.bidService.bestBid(this.lastNomination, this.teams);
+        let bestBid = this.bestBid;
         if(!bestBid){
             return "No bids placed yet";
         } 
         return `Best bid: ${bestBid.bid.points} points by ${bestBid.team.manager.nickName}`;
     }
+
+    get bestBid(): BidTeam{
+        return this.bidService.bestBid(this.lastNomination, this.teams);
+    }
+
+    get imWinning(): boolean{
+        let bestBid = this.bestBid;
+        if(!bestBid)
+            return false;
+        return bestBid.team.manager.id === this.manager.id;
+    }
+
+
+    get iPassed(): boolean{
+        return !!_.find(this.lastNomination.bids, b => {return b.managerId === this.manager.id && b.points === 0; });
+    }
+
     passOnThisGuy(): void{
         this.bidPoints = 0;
         this.bid();
@@ -82,5 +101,22 @@ export class BiddingComponent implements OnInit {
     bid(): void{
         this.bidService.createBid(this.bidPoints, this.manager.id, this.lastNomination, this.teams);
         this.bidPoints = 1;
+    }
+
+    get minBid(): number{
+        let b = this.bestBid;
+        return Math.min(!b ? 1 : b.bid.points, 2);
+    }
+
+    get maxBid(): number{
+       return Math.min(_.find(this.teams, t => t.manager.id === this.manager.id).bidPoints, 2);
+    }
+
+    subPoint(): void{
+        this.bidPoints--;
+    }
+
+    addPoint(): void{
+        this.bidPoints++;
     }
 }

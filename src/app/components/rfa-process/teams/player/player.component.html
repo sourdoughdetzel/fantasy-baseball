@@ -1,8 +1,9 @@
-<md-card>
-    <label class="name">{{player.firstName}} {{player.lastName}}</label>
+<md-card [ngClass]="{'enabled': !player.protected, 'nominated': playerIsNominated}">
+    <label class="name" >{{player.firstName}} {{player.lastName}}</label>
     <label class="positions" *ngFor="let pos of player.positions;">{{pos}}</label>
     <span class="spacer"></span>
-    <button *ngIf="myNomination" (click)="nominate(player)" md-raised-button class="nominate">
+    <md-icon *ngIf="player.protected" class="lock">lock</md-icon>
+    <button *ngIf="myNomination && !player.protected && player.designation === 'RFA'" (click)="nominate(player)" md-raised-button class="nominate">
         Nominate
     </button>
 </md-card>

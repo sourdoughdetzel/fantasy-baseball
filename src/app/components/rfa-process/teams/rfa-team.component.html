@@ -13,10 +13,12 @@
         </md-card>
         <div class="players">
             <player-group [players]="team.players" [designation]="'RFA'"></player-group>
+            <player-group [players]="team.players" [designation]="'Acquired'" [hideEmpty]="true"></player-group>
             <div [hidden]="!showDetails">
                 <player-group [players]="team.players" [designation]="'Other'"></player-group>
                 <player-group [players]="team.players" [designation]="'LTK'"></player-group>
                 <player-group [players]="team.players" [designation]="'CK'"></player-group>
                 <player-group [players]="team.players" [designation]="'IP'"></player-group>
+
             </div>
         </div>

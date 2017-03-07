@@ -5,13 +5,16 @@ import {Manager} from '../models/manager';
 import {Team} from '../models/team';
 import {Nomination, NominationStatus} from '../models/nomination';
 import {Bid, BidTeam} from '../models/bid';
+import {TeamService} from './team.service';
 import * as _ from 'lodash';
 
 @Injectable()
 export class BidService {
   private defaultNominator: any = {id: -1};
   private maxBid : number = 2;
-  constructor(private rfaService: RfaService, private nominationService: NominationService) { }
+  constructor(private rfaService: RfaService, 
+            private nominationService: NominationService,
+            private teamService: TeamService) { }
 
     createBid(points: number, bidderId: number, nomination: Nomination, teams: Team[]){
         let bidder = _.find(teams, t => t.manager.id === bidderId);
@@ -24,14 +27,18 @@ export class BidService {
         let nominationClone = _.clone(nomination);
         nominationClone.bids.push(bid);
         if(this.noOneWantsPlayer(nominationClone, teams)){
-            this.updateStatus(nomination, "Complete");
+            this.updateStatus(nomination, bidder, "Fail");
         }
         else{
           let nextBidder = this.getNextBidder(nominationClone, teams);
           if(nextBidder.id === -1){
-            this.updateStatus(nomination, 
-                          this.nominationService.requiresCompensation(nomination, bidder, teams) ? 
+            let requiresComp = this.nominationService.requiresCompensation(nomination, bidder, teams);
+            this.updateStatus(nomination, bidder,
+                           requiresComp ? 
                             "PendingCompensation" : "Complete");
+            if(!requiresComp){
+              this.completeTransaction(nominationClone, teams);
+            }     
           }
         }
         this.rfaService.createBid(bid);
@@ -39,24 +46,38 @@ export class BidService {
 
     private noOneWantsPlayer(nomination: Nomination, teams: Team[]): boolean{
         let eligibleBidders = this.getEligibleBidders(teams, nomination);
-        return _.filter(nomination.bids, b => b.points === 0).length === nomination.bids.length && nomination.bids.length >= eligibleBidders.length;
+        return _.filter(nomination.bids, b => b.points === 0).length === nomination.bids.length && eligibleBidders.length === 0;
     }
 
-    private updateStatus(nomination: Nomination, status: NominationStatus): void{
+    private updateStatus(nomination: Nomination, bidder: Team, status: NominationStatus): void{
       nomination.status = status;
+      nomination.bids = [];
       this.rfaService.updateNomination(nomination);
     }
     
+    private completeTransaction(nomination: Nomination, teams: Team[]): void{
+        let player = _.find(this.teamService.playersData, p => p.$key === nomination.playerKey);
+        let bestBid = this.bestBid(nomination, teams);
+        player.protected = true;
+        player.teamId = bestBid.team.id
+        player.designation = "Acquired";
+        this.teamService.updatePlayer(player);
+        bestBid.team.bidPoints -= bestBid.bid.points;
+        this.teamService.updateTeam(bestBid.team);
+    }
+
     getNextBidder(nomination: Nomination, teams: Team[]): Manager{
         if(nomination.status !== "InProgress") return this.defaultNominator;
         let lastBid = this.getLastBid(nomination.bids);
         let eligibleBidders = this.getEligibleBidders(teams, nomination);
-        return (eligibleBidders.length) ? this.getNextInLine(lastBid, eligibleBidders) : this.defaultNominator;
+        let bidder: Team = _.find(teams, t => !!lastBid && t.manager.id === lastBid.managerId);
+        return (eligibleBidders.length > 0) ? this.getNextInLine(bidder, eligibleBidders) : this.defaultNominator;
     }
 
     managerCanBid(nomination: Nomination, teams: Team[], managerId: number): boolean{
       if(nomination.status !== "InProgress") return false;
       let eligibleBidders = this.getEligibleBidders(teams, nomination);
+
       return _.find(eligibleBidders, eb => eb.manager.id === managerId) != null;
     }
 
@@ -64,23 +85,31 @@ export class BidService {
       return this.getHighestBid(nomination.bids, teams);
     }
 
-    private getNextInLine(lastBid: Bid, eligibleTeams: Team[]): Manager{
-        let nextBidTeamIdx: number;
-        if(!lastBid){
-          nextBidTeamIdx = 0;
+    private getNextInLine(bidder: Team, eligibleTeams: Team[]): Manager{
+        if(!bidder){
+          return eligibleTeams[0].manager;
         }
         else{
-          nextBidTeamIdx = _.findIndex(eligibleTeams, e => e.manager.id === lastBid.managerId) + 1;
-          nextBidTeamIdx = (nextBidTeamIdx < eligibleTeams.length)? nextBidTeamIdx : 0;
+          eligibleTeams.push(bidder);
+          let rankedTeams = _.orderBy(eligibleTeams, ["rank"], ["desc"]);
+          let bidIdx = _.indexOf(rankedTeams, bidder);
+          return rankedTeams[(bidIdx === rankedTeams.length - 1) ? 0 : bidIdx + 1].manager;
         }
-        return eligibleTeams[nextBidTeamIdx].manager;
+        
     }
 
     private getEligibleBidders(teams: Team[], nomination: Nomination) : Team[]{
         let highestBid = this.getHighestBid(nomination.bids, teams);
-      return _.orderBy(_.filter(teams, t => 
+        let bidders = _.orderBy(_.filter(teams, t => 
+                      (this.isNotHighestBidder(t, highestBid)) &&
                       (this.hasAvailableRfaSlot(t)) &&
-                      (this.hasEnoughBidPoints(t, highestBid))), ["rank"], ["desc"]);
+                      (this.hasEnoughBidPoints(t, highestBid)) &&
+                      (this.didNotBidZero(t.manager.id, nomination.bids))), ["rank"], ["desc"]);
+        return bidders;
+    }
+
+    private isNotHighestBidder(team: Team, highest: BidTeam): boolean{
+      return !highest || team.id !== highest.team.id;
     }
 
     private hasEnoughBidPoints(team: Team, highest: BidTeam): boolean{
@@ -103,9 +132,11 @@ export class BidService {
     }
 
     private hasAvailableRfaSlot(team: Team){
-      return _.find(team.players, p => !p.protected) != null;
+      return _.filter(team.players, p => {return (p.designation === "RFA" || p.designation === "Acquired") && p.protected;}).length < 3;
     }
-
+    private didNotBidZero(managerId: number, bids: Bid[]): boolean{
+      return !_.find(bids, b => {return b.points === 0 && b.managerId === managerId});
+    }
     private getLastBid(bids: Bid[]): Bid{
       return _.orderBy(bids, ["bidDate"], ["desc"])[0];
     }

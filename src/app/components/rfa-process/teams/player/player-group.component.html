@@ -1,2 +1,2 @@
-<md-card>{{dez}}s</md-card>
+<md-card *ngIf="!hideEmpty || (players | designation:dez).length > 0">{{dez}}s</md-card>
 <player-card *ngFor="let player of (players | designation:dez)" [player]="player"></player-card>

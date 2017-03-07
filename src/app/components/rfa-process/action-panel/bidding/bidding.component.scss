@@ -5,9 +5,9 @@
     font-size:20px;
 }
 
+
 button{
     width:150px;
-    top:-9px;
     margin-left:10px;
     height:40px;
     &.not-interested{
@@ -25,8 +25,19 @@ button{
     }
 }
 
+
 .bid-container{
-    margin-top:-4px;
+    margin-top: 5px;
+
+    .points{
+        width:20px;
+    }
+    
+    .up-down{
+        width:40px;
+        height:40px;
+        margin:0;
+    }
 }
 
 .message-container{
@@ -42,4 +53,9 @@ button{
     .small{
         font-size:20px;
     }
+}
+
+.your-turn{
+    font-size:26px;
+    color:#{map-get($mat-green, 500)}
 }

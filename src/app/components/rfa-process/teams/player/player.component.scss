@@ -8,14 +8,23 @@ md-card{
     border-radius:inherit;
     display: flex;
     flex-direction: row;
-    &:hover{
-        background-color:#{map-get($primary, 300)};
-        opacity:.8;
-    }
+
+    
     .name{
         margin-right:5px;
+        opacity:.4;
     }
 
+    &.enabled{
+        .name{
+            opacity:1;
+        }
+        &:hover{
+            background-color:#{map-get($primary, 300)};
+            opacity:.8;
+        }
+        
+    }
     .nominate{
         height: 15px;
         font-size: 11px;
@@ -32,4 +41,18 @@ md-card{
         font-size: 11px;
     }
 
+    .lock{
+        color:#{map-get($accent, 500)};
+        font-size: 20px;
+        height: 15px;
+        width: 15px;
+        margin-top: -3px;
+    }
+
+    &.nominated{
+        &:hover{
+            background-color:#{map-get($mat-green, 400)};
+        }
+        background-color:#{map-get($mat-green, 400)};
+    }
 }

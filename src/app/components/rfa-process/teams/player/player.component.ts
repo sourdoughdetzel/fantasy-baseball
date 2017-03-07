@@ -53,4 +53,11 @@ export class PlayerComponent {
         };
         this.rfaService.createNomination(nomination);
     }
+
+    get playerIsNominated(): boolean{
+        let lastNom = this.nominationService.getLastNomination(this.rfaProcess);
+        if(!lastNom || lastNom.status === "Complete" || lastNom.status === "Fail") return false;
+        return this.player.$key === lastNom.playerKey;
+    }
+    
 }

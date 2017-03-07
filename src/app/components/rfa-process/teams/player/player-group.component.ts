@@ -12,7 +12,8 @@ import {RfaService} from '../../../../services/rfa.service';
 export class PlayerGroupComponent{
     @Input()players: Player[];
     @Input('designation')dez: Designation;
-
+    @Input()hideEmpty: boolean;
+    
     constructor(private rfaService: RfaService){
     }
 
