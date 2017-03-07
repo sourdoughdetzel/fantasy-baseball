@@ -69,7 +69,7 @@ export class BiddingComponent implements OnInit {
 
     get winningBidText(): string{
         let bestBid = this.bidService.bestBid(this.lastNomination, this.teams);
-        if(!bestBid){
+        if(!bestBid || bestBid.bid.points === 0){
             return "No bids placed yet";
         } 
         return `Best bid: ${bestBid.bid.points} points by ${bestBid.team.manager.nickName}`;
