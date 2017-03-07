@@ -49,11 +49,11 @@ export class NominationService{
 
     private biddingInProgress(rfaProcess: RfaProcess): boolean{
         let lastNomination = this.getLastNomination(rfaProcess);
-        return (!lastNomination) ? false : (lastNomination.status === "InProgress");
+        return (!lastNomination) ? false : (lastNomination.status === "InProgress" || lastNomination.status === "PendingCompensation");
     }
 
     requiresCompensation(nomination: Nomination, winner: Team, teams: Team[]): boolean{
         let owner = _.find(teams, t => t.manager.id === nomination.ownerKey);
-        return winner.rank > owner.rank;
+        return winner.rank < owner.rank;
     }
 }

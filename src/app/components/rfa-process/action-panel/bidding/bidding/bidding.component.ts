@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import {TeamService} from '../../../../services/team.service';
-import {RfaService} from '../../../../services/rfa.service';
-import {ManagerService} from '../../../../services/manager.service';
-import {NominationService} from '../../../../services/nomination.service';
-import {BidService} from '../../../../services/bid.service';
-import {RfaProcess} from '../../../../models/rfa-process';
-import {Team} from '../../../../models/team';
-import {Manager} from '../../../../models/manager';
-import {Nomination} from '../../../../models/nomination';
-import {Player} from '../../../../models/player';
-import {Bid, BidTeam} from '../../../../models/bid';
-import {Observable} from 'rxjs';
+import { Component, Input} from '@angular/core';
+import {TeamService} from '../../../../../services/team.service';
+import {RfaService} from '../../../../../services/rfa.service';
+import {ManagerService} from '../../../../../services/manager.service';
+import {NominationService} from '../../../../../services/nomination.service';
+import {BidService} from '../../../../../services/bid.service';
+import {RfaProcess} from '../../../../../models/rfa-process';
+import {Team} from '../../../../../models/team';
+import {Manager} from '../../../../../models/manager';
+import {Nomination} from '../../../../../models/nomination';
+import {Player} from '../../../../../models/player';
+import {Bid, BidTeam} from '../../../../../models/bid';
 import * as _ from 'lodash';
 
 @Component({
@@ -18,24 +17,21 @@ import * as _ from 'lodash';
   templateUrl: './bidding.component.html',
   styleUrls: ['./bidding.component.scss']
 })
-export class BiddingComponent implements OnInit {
-
-  nominatedPlayer: Player;
+export class BiddingComponent{
   bidPoints: number;
+  @Input()lastNomination: Nomination;
 
   constructor(private rfaService: RfaService, 
                 private managerService: ManagerService,
                 private nominationService: NominationService,
                 private teamService: TeamService,
                 private bidService: BidService) { 
-                    
+
+                  this.bidPoints = 1;
                 }
 
-  ngOnInit() {
-    this.bidPoints = 1;
-  }
-
-    get manager(): Manager{
+ 
+  get manager(): Manager{
         return this.managerService.currentManager;
     }
 
@@ -47,21 +43,11 @@ export class BiddingComponent implements OnInit {
         return this.rfaService.currentRfaProcessData;
     }
 
-    get nominatingManager(): Manager{
-        return this.nominationService.nextNominator(this.rfaProcess, this.teams);
+    get nominatedPlayer(): Player{
+      return !this.lastNomination ? null : _.find(this.teamService.playersData, p => p.$key === this.lastNomination.playerKey);
     }
-
-    get myNomination(): boolean{
-        return this.nominatingManager.id === this.manager.id;
-    }
-
-    get lastNomination(): Nomination{
-        let nomination = this.nominationService.getLastNomination(this.rfaProcess);
-        this.nominatedPlayer = !nomination ? null : _.find(this.teamService.playersData, p => p.$key === nomination.playerKey);
-        return nomination;
-    }
-
-    get nextToBid(): boolean{
+    
+  get nextToBid(): boolean{
         return this.bidService.getNextBidder(this.lastNomination, this.teams).id === this.manager.id;
     }
 
@@ -83,7 +69,7 @@ export class BiddingComponent implements OnInit {
 
     get imWinning(): boolean{
         let bestBid = this.bestBid;
-        if(!bestBid)
+        if(!bestBid || bestBid.bid.points === 0)
             return false;
         return bestBid.team.manager.id === this.manager.id;
     }

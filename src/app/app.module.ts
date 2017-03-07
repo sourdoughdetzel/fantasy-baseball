@@ -28,9 +28,12 @@ import {RfaTeamComponent} from './components/rfa-process/teams/rfa-team.componen
 import {PositionPipe} from './components/team-setup/roster/position.pipe';
 import {RosterPlayerComponent} from './components/team-setup/roster/roster-player.component';
 import {NominationService} from './services/nomination.service';
-import { BiddingComponent } from './components/rfa-process/action-panel/bidding/bidding.component';
+import { BiddingProcessComponent } from './components/rfa-process/action-panel/bidding/bidding-process.component';
 import {PreBiddingComponent} from './components/rfa-process/action-panel/pre-bidding/pre-bidding.component';
 import {BidService} from './services/bid.service';
+import { NominationComponent } from './components/rfa-process/action-panel/bidding/nomination/nomination.component';
+import { CompensationComponent } from './components/rfa-process/action-panel/bidding/compensation/compensation.component';
+import {BiddingComponent} from './components/rfa-process/action-panel/bidding/bidding/bidding.component';
 
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
@@ -68,8 +71,11 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     DesignationPipe,
     PositionPipe,
     RosterPlayerComponent,
+    BiddingProcessComponent,
     BiddingComponent,
-    PreBiddingComponent
+    PreBiddingComponent,
+    NominationComponent,
+    CompensationComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,56 @@
+@import '../../../../../app.component.scss';
+.nominated{
+    color: #{map-get($mat-green, 400)};
+    font-weight:500;
+    font-size:20px;
+}
+
+
+button{
+    width:150px;
+    margin-left:10px;
+    height:40px;
+    &.not-interested{
+        background-color:#{map-get($mat-red, 300)};
+        &:hover{
+            background-color:#{map-get($mat-red, 400)};
+        }
+    }
+
+    &.bid{
+        background-color:#{map-get($mat-green, 300)};
+        &:hover{
+            background-color:#{map-get($mat-green, 400)};
+        }
+    }
+}
+
+
+.bid-container{
+    margin-top: 5px;
+
+    .points{
+        width:20px;
+    }
+    
+    .up-down{
+        width:40px;
+        height:40px;
+        margin:0;
+    }
+}
+
+.message-container{
+    margin-top:16px;
+
+    .bid-message{
+        font-weight:200;
+        font-size:25px;
+        font-style:oblique;
+        color:$gray;
+    }
+
+    .small{
+        font-size:20px;
+    }
+}

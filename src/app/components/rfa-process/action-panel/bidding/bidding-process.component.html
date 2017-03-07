@@ -1,0 +1,13 @@
+<div *ngIf="!!lastNomination">
+    <div [ngSwitch]="lastNomination.status">
+        <div *ngSwitchDefault>
+           <nomination></nomination>
+        </div>
+        <div *ngSwitchCase="'InProgress'">
+            <bidding [lastNomination]="lastNomination"></bidding>
+        </div>
+        <div *ngSwitchCase="'PendingCompensation'">
+            <compensation [lastNomination]="lastNomination"></compensation>
+        </div>
+    </div>
+</div>

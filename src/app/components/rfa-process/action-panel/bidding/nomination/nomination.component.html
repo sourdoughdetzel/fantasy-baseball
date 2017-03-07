@@ -1,0 +1,12 @@
+<div *ngIf="myNomination">
+                <md-card-header>
+                    <md-card-title class="your-turn">It's your turn to nominate someone!</md-card-title>
+                    <md-card-subtitle>Click 'Nominate' on an RFA below</md-card-subtitle>
+                </md-card-header>
+            </div>
+            <div *ngIf="!myNomination">
+                <md-card-header>
+                    <md-card-title>Waiting on {{nominatingManager.nickName}} to nominate someone for bidding</md-card-title>
+                    <md-card-subtitle>Give them a few seconds, then berate them soundly</md-card-subtitle>
+                </md-card-header>
+            </div>

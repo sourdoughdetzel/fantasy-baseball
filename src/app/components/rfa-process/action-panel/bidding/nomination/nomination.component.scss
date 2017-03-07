@@ -1,0 +1,5 @@
+@import '../../../../../app.component.scss';
+.your-turn{
+    font-size:26px;
+    color:#{map-get($mat-green, 500)}
+}
