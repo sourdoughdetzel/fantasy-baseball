@@ -1,1 +1,1 @@
-Web interface for our fanatsy baseball league.
+Web interface for our fantasy baseball league.
