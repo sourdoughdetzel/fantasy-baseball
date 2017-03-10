@@ -22,4 +22,5 @@ export class ManagerService {
     getLeagueManagers(): FirebaseListObservable<Manager[]>{
         return this.af.database.list('/managers');
     }
+    
 }

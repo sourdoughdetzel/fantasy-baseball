@@ -32,7 +32,7 @@ export class BidService {
         else{
           let nextBidder = this.getNextBidder(nominationClone, teams);
           if(nextBidder.id === -1){
-            let requiresComp = this.nominationService.requiresCompensation(nomination, bidder, teams);
+            let requiresComp = this.nominationService.requiresCompensation(nomination, this.bestBid(nominationClone, teams).team, teams);
             this.updateStatus(nomination, bidder,
                            requiresComp ? 
                             "PendingCompensation" : "Complete");

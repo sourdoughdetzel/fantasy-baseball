@@ -25,7 +25,7 @@ md-card{
         }
         
     }
-    .nominate{
+    .select{
         height: 15px;
         font-size: 11px;
         line-height: inherit;
@@ -49,7 +49,7 @@ md-card{
         margin-top: -3px;
     }
 
-    &.nominated{
+    &.selected{
         &:hover{
             background-color:#{map-get($mat-green, 400)};
         }

@@ -18,7 +18,7 @@ export class NominationComponent implements OnInit {
   constructor(private rfaService: RfaService, 
                 private managerService: ManagerService,
                 private nominationService: NominationService,
-                private teamService: TeamService,) { }
+                private teamService: TeamService) { }
 
   ngOnInit() {
   }

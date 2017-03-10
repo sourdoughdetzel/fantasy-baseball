@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, ViewContainerRef, OnInit} from '@angular/core';
 import {TeamService} from '../../../../../services/team.service';
 import {RfaService} from '../../../../../services/rfa.service';
 import {ManagerService} from '../../../../../services/manager.service';
@@ -8,8 +8,11 @@ import {RfaProcess} from '../../../../../models/rfa-process';
 import {Team} from '../../../../../models/team';
 import {Manager} from '../../../../../models/manager';
 import {Nomination} from '../../../../../models/nomination';
-import {Player} from '../../../../../models/player';
+import {Player, Button} from '../../../../../models/player';
 import {Bid, BidTeam} from '../../../../../models/bid';
+import { MdDialogConfig, MdDialog, MdDialogRef } from '@angular/material';
+import {CompensationDialog} from './compensation-popup/compensation-popup.component';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -17,14 +20,39 @@ import * as _ from 'lodash';
   templateUrl: './compensation.component.html',
   styleUrls: ['./compensation.component.scss']
 })
-export class CompensationComponent {
+export class CompensationComponent implements OnInit{
   @Input()lastNomination: Nomination;
+  @Input()bestBid: BidTeam;
 
   constructor(private rfaService: RfaService, 
                 private managerService: ManagerService,
                 private nominationService: NominationService,
                 private teamService: TeamService,
-                private bidService: BidService) { }
+                private bidService: BidService,
+                private viewContainerRef: ViewContainerRef,
+                private dialog: MdDialog) { }
+
+    ngOnInit(){
+        if((this.lastNomination && this.bestBid) && 
+            (this.lastNomination.ownerKey === this.manager.id ||
+            this.bestBid.team.manager.id === this.manager.id)){
+            this.openCompensationDialog();
+        }
+        
+    }
+
+    private openCompensationDialog(): void{
+        let config = new MdDialogConfig();
+        config.viewContainerRef = this.viewContainerRef;
+        config.disableClose = true;
+        let dialogRef : MdDialogRef<CompensationDialog> = this.dialog.open(CompensationDialog, config);
+        dialogRef.componentInstance.lastNomination = this.lastNomination;
+        dialogRef.componentInstance.bestBid = this.bestBid;
+        dialogRef.componentInstance.manager = this.manager;
+        dialogRef.afterClosed().subscribe(res => {
+            
+        });
+    }
 
   get manager(): Manager{
         return this.managerService.currentManager;
@@ -45,13 +73,11 @@ export class CompensationComponent {
       return this._nominatedPlayer;
   }
 
-    get bestBid(): BidTeam{
-        return this.bidService.bestBid(this.lastNomination, this.teams);
-    }
-
     get negotiationText(): string{
         return `${this.bestBid.team.manager.nickName} and 
                 ${_.find(this.teams, t => this.lastNomination.ownerKey === t.manager.id).manager.nickName} 
                 are negotiating compensation for ${this.nominatedPlayer.firstName} ${this.nominatedPlayer.lastName}`
     }
+
+
 }

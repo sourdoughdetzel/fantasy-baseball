@@ -45,5 +45,7 @@ export class BiddingProcessComponent {
         return this.nominationService.getLastNomination(this.rfaProcess);
     }
 
-    
+    get bestBid(): BidTeam{
+        return this.bidService.bestBid(this.lastNomination, this.teams);
+    }
 }

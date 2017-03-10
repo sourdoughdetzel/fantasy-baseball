@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Player, Designation} from '../../../../models/player';
+import {Player, Designation, Button} from '../../../../models/player';
 import {Manager} from '../../../../models/manager';
 import {ManagerService} from '../../../../services/manager.service';
 import {RfaProcess} from '../../../../models/rfa-process';
@@ -17,7 +17,8 @@ import * as _ from 'lodash';
 })
 export class PlayerComponent {
     @Input()player: Player;
-    @Input()biddable: boolean;
+    @Input()action: Button;
+    @Input()selectedKey: string;
 
     constructor(private rfaService: RfaService,
                 private managerService: ManagerService, 
@@ -36,28 +37,11 @@ export class PlayerComponent {
         return this.teamService.teamsData;
     }
 
-    get myNomination(): boolean{
-        return this.nominationService.nextNominator(this.rfaProcess, this.teams).id === this.manager.id;
-    }
+    buttonClick(player: Player): void{
+        this.action.action(player);
+    } 
 
-    nominate(player: Player){
-
-        let nomination: Nomination = {
-            playerKey: player.$key,
-            ownerKey: _.find(this.teams, t => _.find(t.players, p => p.$key === player.$key) != null).manager.id,
-            nominatorKey: this.manager.id,
-            bids: [],
-            status: "InProgress",
-            rfaProcessKey: this.rfaProcess.$key,
-            nominationDate: new Date().getTime()
-        };
-        this.rfaService.createNomination(nomination);
+    get highlighted(): boolean{
+        return this.player.$key === this.selectedKey;
     }
-
-    get playerIsNominated(): boolean{
-        let lastNom = this.nominationService.getLastNomination(this.rfaProcess);
-        if(!lastNom || lastNom.status === "Complete" || lastNom.status === "Fail") return false;
-        return this.player.$key === lastNom.playerKey;
-    }
-    
 }

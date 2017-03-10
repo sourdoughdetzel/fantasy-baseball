@@ -34,6 +34,7 @@ import {BidService} from './services/bid.service';
 import { NominationComponent } from './components/rfa-process/action-panel/bidding/nomination/nomination.component';
 import { CompensationComponent } from './components/rfa-process/action-panel/bidding/compensation/compensation.component';
 import {BiddingComponent} from './components/rfa-process/action-panel/bidding/bidding/bidding.component';
+import { CompensationDialog} from './components/rfa-process/action-panel/bidding/compensation/compensation-popup/compensation-popup.component';
 
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
@@ -75,7 +76,8 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     BiddingComponent,
     PreBiddingComponent,
     NominationComponent,
-    CompensationComponent
+    CompensationComponent,
+    CompensationDialog
   ],
   imports: [
     BrowserModule,
@@ -91,7 +93,8 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     DndModule.forRoot(),
   ],
   entryComponents:[
-    AddPlayerDialog
+    AddPlayerDialog,
+    CompensationDialog
   ],
   providers: [ManagerService, TeamService, RfaService, NominationService, BidService],
   bootstrap: [AppComponent]

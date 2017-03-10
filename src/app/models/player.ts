@@ -12,3 +12,9 @@ export interface Player{
     teamId: number;
     $key: string;
 }
+
+export interface Button{
+    display: string;
+    action: (player: Player) => void;
+    show: (player: Player) => boolean;
+}
