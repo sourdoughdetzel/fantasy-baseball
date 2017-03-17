@@ -3,7 +3,7 @@
 .compensation-container{
     display:flex;
     flex-direction:row;
-
+    padding:10px 20px;
     .left{
         min-width:300px;
         max-width:400px;
@@ -19,6 +19,10 @@
             font-weight:200;
             padding:5px;
         }
+
+        .desc{
+            margin-top:10px;
+        }
     }
     
     .mat-card{
@@ -30,6 +34,26 @@
                 margin-left:-5px;
                 box-sizing: border-box;
             }
+
+
         }
+    
 }
 
+.buttons{
+        flex-direction:row-reverse;
+
+        .no{
+            background-color:#{map-get($mat-red, 200)};
+            &:hover{
+                background-color:#{map-get($mat-red, 300)};
+            }
+        }
+
+        .yes{
+            background-color:#{map-get($mat-green, 200)};
+            &:hover{
+                background-color:#{map-get($mat-green, 300)};
+            }
+        }
+    }

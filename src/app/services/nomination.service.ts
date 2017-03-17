@@ -20,17 +20,16 @@ export class NominationService{
         let teamIdx: number;
         if(nominatorIdx === 0){
             let lowerRankedTeams = _.filter(eligibleTeams, t => t.rank > lastNominatingTeam.rank);
-            teamIdx = lowerRankedTeams ? _.indexOf(eligibleTeams, lowerRankedTeams[0]) : 0;
+            teamIdx = lowerRankedTeams.length ? _.indexOf(eligibleTeams, lowerRankedTeams[0]) : 0;
         }
         else{
-            teamIdx = (nominatorIdx >= (this.maxNominators)) ? 0 : nominatorIdx;
+            teamIdx = ((nominatorIdx >= (this.maxNominators)) || eligibleTeams.length === 1) ? 0 : nominatorIdx;
         }
-       
         return eligibleTeams[teamIdx].manager;
     }
 
     private eligibleManagers(teams: Team[]): Team[]{
-       return _.take(_.orderBy(_.filter(teams, t => _.filter(t.players, p => p.designation === "RFA" && !p.protected).length > 0), ["rank"], ["asc"]), this.maxNominators);
+       return _.take(_.orderBy(_.filter(teams, t => t.bidPoints > 0), ["rank"], ["asc"]), this.maxNominators);
     }
 
     private getLastNominatingTeam(process: RfaProcess, teams: Team[]): Team{

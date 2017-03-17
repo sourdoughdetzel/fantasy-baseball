@@ -21,7 +21,6 @@ import * as _ from 'lodash';
   styleUrls: ['./compensation.component.scss']
 })
 export class CompensationComponent implements OnInit{
-  @Input()lastNomination: Nomination;
   @Input()bestBid: BidTeam;
 
   constructor(private rfaService: RfaService, 
@@ -46,12 +45,15 @@ export class CompensationComponent implements OnInit{
         config.viewContainerRef = this.viewContainerRef;
         config.disableClose = true;
         let dialogRef : MdDialogRef<CompensationDialog> = this.dialog.open(CompensationDialog, config);
-        dialogRef.componentInstance.lastNomination = this.lastNomination;
         dialogRef.componentInstance.bestBid = this.bestBid;
         dialogRef.componentInstance.manager = this.manager;
         dialogRef.afterClosed().subscribe(res => {
-            
+            //do something
         });
+    }
+
+    get lastNomination(): Nomination{
+        return this.nominationService.getLastNomination(this.rfaProcess);
     }
 
   get manager(): Manager{

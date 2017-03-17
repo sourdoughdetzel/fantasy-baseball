@@ -55,7 +55,7 @@ export class BidService {
       this.rfaService.updateNomination(nomination);
     }
     
-    private completeTransaction(nomination: Nomination, teams: Team[]): void{
+    completeTransaction(nomination: Nomination, teams: Team[]): void{
         let player = _.find(this.teamService.playersData, p => p.$key === nomination.playerKey);
         let bestBid = this.bestBid(nomination, teams);
         player.protected = true;
@@ -64,6 +64,14 @@ export class BidService {
         this.teamService.updatePlayer(player);
         bestBid.team.bidPoints -= bestBid.bid.points;
         this.teamService.updateTeam(bestBid.team);
+        if(nomination.status === "PendingCompensation"){
+          player = _.find(this.teamService.playersData, p => p.$key === nomination.compensationPlayerKey);
+          let team = _.find(teams, t => t.manager.id === nomination.ownerKey);
+          player.protected = true;
+          player.teamId = team.id;
+          player.designation = "Acquired";
+          this.teamService.updatePlayer(player);
+        }
     }
 
     getNextBidder(nomination: Nomination, teams: Team[]): Manager{

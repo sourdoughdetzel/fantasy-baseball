@@ -1,5 +1,5 @@
 
-<h2 md-dialog-title>Player Compensation</h2>
+<h2 md-dialog-title class="title">Player Compensation</h2>
 <div *ngIf="!!lastNomination">
   <md-dialog-content class="compensation-container">
     <div class="left">
@@ -16,26 +16,30 @@
       </md-card>
       <div class="transaction-details">
         <div *ngIf="higherRank">
-          You are acquiring <b>{{rfaPlayer.firstName}} {{rfaPlayer.lastName}}</b> from {{rfaTeam.manager.nickName}}
-          <div *ngIf="compensationPlayer">
-
+          <div class="desc">You are acquiring <b>{{rfaPlayer.firstName}} {{rfaPlayer.lastName}}</b> from {{rfaTeam.manager.nickName}}</div>
+          <div *ngIf="compensationPlayer" class="desc">
+            {{rfaTeam.manager.nickName}} asked for <b>{{compensationPlayer.firstName}} {{compensationPlayer.lastName}}</b> in return
           </div>
+           <div *ngIf="!compensationPlayer" class="desc">
+                <i>Waiting for {{rfaTeam.manager.nickName}} to select a player from your team</i>
+              </div>
         </div>
         <div *ngIf="!higherRank">
-          You are giving up <b>{{rfaPlayer.firstName}} {{rfaPlayer.lastName}}</b> to {{team.manager.nickName}}
-            <div *ngIf="compensationPlayer">
-
+          <div class="desc">You are giving up <b>{{rfaPlayer.firstName}} {{rfaPlayer.lastName}}</b> to {{team.manager.nickName}}</div>
+            <div *ngIf="compensationPlayer" class="desc">
+              You asked for <b>{{compensationPlayer.firstName}} {{compensationPlayer.lastName}}</b> in return
             </div>
+            <div *ngIf="!compensationPlayer" class="desc">
+                <i>Select a player from {{team.manager.nickName}}'s team on the left</i>
+              </div>
         </div>
       </div>
     </div>
   </md-dialog-content>
-  <md-dialog-actions>
-      <div *ngIf="higherRank">
-          <button md-raised-button (click)="killTheDeal()">No way!</button>
-      </div>
-      <div *ngIf="!higherRank">
-          <button md-raised-button (click)="killTheDeal()">This team sucks, no thanks!</button>
+  <md-dialog-actions class="buttons">
+      <div *ngIf="higherRank && compensationPlayer">
+          <button md-raised-button class="no" (click)="killTheDeal()">No way!</button>
+          <button md-raised-button class="yes" (click)="doTheDeal()">Deal!</button>
       </div>
   </md-dialog-actions>
 </div>

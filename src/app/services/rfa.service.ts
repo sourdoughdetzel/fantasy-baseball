@@ -4,14 +4,18 @@ import {Nomination} from '../models/nomination';
 import {Bid} from '../models/bid';
 import {RfaProcess} from '../models/rfa-process';
 import {Observable} from 'rxjs';
+import {TeamService} from './team.service';
+import {Team} from '../models/team';
+
 import * as _ from 'lodash';
 
 @Injectable()
 export class RfaService{
     currentRfaProcessData: RfaProcess;
     currentNominationData: Observable<Nomination>;
+    private maxRFA = 3;
 
-    constructor(private af: AngularFire){
+    constructor(private af: AngularFire, private teamService: TeamService){
         this.setCurrentRfaProcess();
     }
 
@@ -78,7 +82,26 @@ export class RfaService{
 
     createBid(bid: Bid): void{
         this.allBids.push(bid);
+        this.tryFinishProcess();
     }
+
+    private tryFinishProcess() : void {
+        if(this.noRFASlots(this.teamService.teamsData)){
+            this.currentRfaProcessData.endDate = (new Date()).getDate();
+            this.currentRfaProcessData.status = "Complete";
+            this.updateProcess(this.currentRfaProcessData);
+        }
+        let haveBidPoints = _.filter(this.teamService.teamsData, t => t.bidPoints > 0);
+        if(haveBidPoints.length === 0 || (haveBidPoints.length > 0 && this.noRFASlots(haveBidPoints))){
+            this.currentRfaProcessData.status = "RosterFilling";
+            this.updateProcess(this.currentRfaProcessData);
+        }
+    }
+
+    private noRFASlots(teams : Team[]): boolean{
+        return !_.find(teams, t => _.filter(t.players, p => p.protected && (p.designation === "RFA" || p.designation === "Acquired")).length < this.maxRFA);
+    }
+
 
     updateBid(bid: Bid): void{
         this.allBids.update(bid.$key, bid);

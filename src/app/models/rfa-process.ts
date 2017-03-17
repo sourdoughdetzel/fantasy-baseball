@@ -5,7 +5,7 @@ export type RfaProcessStatus = "NotStarted" | "Created" | "Bidding" | "RosterFil
 export interface RfaProcess{
     $key?: string;
     status: RfaProcessStatus;
-    endDate?: Date;
+    endDate?: Number;
     nominations: Nomination[];
     readyManagers: number[];
 }
