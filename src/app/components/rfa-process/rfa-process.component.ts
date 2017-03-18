@@ -6,6 +6,8 @@ import {NominationService} from '../../services/nomination.service';
 import {RfaProcess} from '../../models/rfa-process';
 import {Team} from '../../models/team';
 import {Manager} from '../../models/manager';
+import {SearchService} from '../../services/search.service';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -19,7 +21,8 @@ export class RFAProcessComponent {
     constructor(private teamService: TeamService, 
                 private rfaService: RfaService,
                 private managerService: ManagerService,
-                private nominationService: NominationService){
+                private nominationService: NominationService,
+                public searchService: SearchService){
     }
 
     get manager(): Manager{

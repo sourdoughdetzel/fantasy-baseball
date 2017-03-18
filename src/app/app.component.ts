@@ -4,6 +4,8 @@ import {RfaService} from './services/rfa.service';
 import {NominationService} from './services/nomination.service';
 import {TeamService} from './services/team.service';
 import {BidService} from './services/bid.service';
+import {SearchService} from './services/search.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,7 +17,8 @@ export class AppComponent {
                 private managerService: ManagerService,
                 private nominationService: NominationService,
                 private teamService: TeamService,
-                private bidService: BidService){
+                private bidService: BidService,
+                private searchService: SearchService){
 
                 }
 }

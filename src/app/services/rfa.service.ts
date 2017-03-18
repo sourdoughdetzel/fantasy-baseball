@@ -101,8 +101,7 @@ export class RfaService{
     private noRFASlots(teams : Team[]): boolean{
         return !_.find(teams, t => _.filter(t.players, p => p.protected && (p.designation === "RFA" || p.designation === "Acquired")).length < this.maxRFA);
     }
-
-
+    
     updateBid(bid: Bid): void{
         this.allBids.update(bid.$key, bid);
     }

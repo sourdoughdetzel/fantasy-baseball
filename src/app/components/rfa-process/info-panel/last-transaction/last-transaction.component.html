@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="header">Last Transaction</div>
+  <div class="transaction">
+    <div class="win">
+       {{winner.nickName}} won <label class="player">{{wonPlayer}}</label> from {{loser.nickName}}
+    </div>
+    <div class="transaction" *ngIf="lastNomination.compensationPlayerKey">
+       {{loser.nickName}} received <label class="player">{{compensationPlayer}}</label> as compensation
+    </div>
+  </div>
+</div>

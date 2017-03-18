@@ -42,6 +42,11 @@ export class NominationService{
         return _.orderBy(process.nominations, ["nominationDate"], ["desc"])[0];
     }   
 
+    getLastWonNomination(process: RfaProcess): Nomination{
+        let noms = _.orderBy(_.filter(process.nominations, n => n.status === "Complete"), ["nominationDate"], ["desc"]);
+        return noms.length ? noms[0] : null;
+    }
+
     private processInProgress(rfaProcess: RfaProcess): boolean{
         return rfaProcess.status === "Bidding";
     }

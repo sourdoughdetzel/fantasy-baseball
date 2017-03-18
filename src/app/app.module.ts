@@ -31,11 +31,15 @@ import {NominationService} from './services/nomination.service';
 import { BiddingProcessComponent } from './components/rfa-process/action-panel/bidding/bidding-process.component';
 import {PreBiddingComponent} from './components/rfa-process/action-panel/pre-bidding/pre-bidding.component';
 import {BidService} from './services/bid.service';
+import {SearchService} from './services/search.service';
 import { NominationComponent } from './components/rfa-process/action-panel/bidding/nomination/nomination.component';
 import { CompensationComponent } from './components/rfa-process/action-panel/bidding/compensation/compensation.component';
 import {BiddingComponent} from './components/rfa-process/action-panel/bidding/bidding/bidding.component';
 import { CompensationDialog} from './components/rfa-process/action-panel/bidding/compensation/compensation-popup/compensation-popup.component';
-
+import { InfoPanelComponent } from './components/rfa-process/info-panel/info-panel.component';
+import { PlayerSearchComponent } from './components/rfa-process/info-panel/player-search/player-search.component';
+import { LastTransactionComponent } from './components/rfa-process/info-panel/last-transaction/last-transaction.component';
+import {SearchPipe} from './components/rfa-process/teams/player/search.pipe';
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
   { path: 'teams',      component: TeamSetupComponent },
@@ -71,13 +75,17 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     RfaTeamComponent,
     DesignationPipe,
     PositionPipe,
+    SearchPipe,
     RosterPlayerComponent,
     BiddingProcessComponent,
     BiddingComponent,
     PreBiddingComponent,
     NominationComponent,
     CompensationComponent,
-    CompensationDialog
+    CompensationDialog,
+    InfoPanelComponent,
+    PlayerSearchComponent,
+    LastTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -96,7 +104,7 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     AddPlayerDialog,
     CompensationDialog
   ],
-  providers: [ManagerService, TeamService, RfaService, NominationService, BidService],
+  providers: [ManagerService, TeamService, RfaService, NominationService, BidService, SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

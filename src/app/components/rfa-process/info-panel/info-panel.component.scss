@@ -1,0 +1,18 @@
+.info-panel{
+    display: flex;
+    flex-direction: column;
+    height: 50px;
+    margin-top: 20px;
+}
+
+player-search{
+    width: 300px;
+    display: flex;
+    align-self:flex-end;
+    margin-top:-25px;
+}
+
+last-transaction{
+    display:flex;
+    align-self:flex-start;
+}

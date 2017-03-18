@@ -1,0 +1,22 @@
+@import '../../../../app.component.scss';
+
+.container{
+    margin-left:10px;
+
+    .header{
+        font-size:13px;
+        opacity:.4;
+        font-style:italic;
+    }
+
+    .transaction{
+        font-size:14px;
+        margin-top:5px;
+        font-weight:200;
+
+        .player{
+            font-weight:bold;
+            color: #{map-get($mat-green, 500)};
+        }
+    }
+}

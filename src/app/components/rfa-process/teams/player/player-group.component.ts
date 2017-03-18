@@ -8,6 +8,8 @@ import {TeamService} from '../../../../services/team.service';
 import {NominationService} from '../../../../services/nomination.service';
 import {Team} from '../../../../models/team';
 import {Nomination} from '../../../../models/nomination';
+import {SearchService} from '../../../../services/search.service';
+
 import * as _ from "lodash";
 @Component({
     selector: 'player-group',
@@ -22,7 +24,8 @@ export class PlayerGroupComponent implements OnInit{
     constructor(private rfaService: RfaService,
                 private teamService: TeamService,
                 private managerService: ManagerService,
-                private nominationService: NominationService){
+                private nominationService: NominationService,
+                private searchService: SearchService){
     }
 
     ngOnInit(){
@@ -33,6 +36,10 @@ export class PlayerGroupComponent implements OnInit{
         };
     }
 
+    get searchText(): string{
+        return this.searchService.searchText;
+    }
+    
     get rfaProcess(): RfaProcess{
         return this.rfaService.currentRfaProcessData;
     }
