@@ -60,7 +60,7 @@ export class BiddingComponent{
         if(!bestBid || bestBid.bid.points === 0){
             return "No bids placed yet";
         } 
-        return `Best bid: ${bestBid.bid.points} points by ${bestBid.team.manager.nickName}`;
+        return `Best bid: ${bestBid.bid.points} point${bestBid.bid.points > 1 ? 's' : ''} by ${bestBid.team.manager.nickName}`;
     }
 
     get bestBid(): BidTeam{

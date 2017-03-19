@@ -33,7 +33,7 @@ export class RfaService{
         }).subscribe(p => {
             let subscribeToNominations: boolean = !this.currentRfaProcessData;
             this.currentRfaProcessData = p;
-            if(subscribeToNominations){
+            if(subscribeToNominations && p){
                 this.processNominations(p);
             }
             

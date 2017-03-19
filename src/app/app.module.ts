@@ -92,7 +92,7 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     FormsModule,
     HttpModule,
     MaterialModule.forRoot(),
-    RouterModule.forRoot(appRoutes, {useHash: true}),
+    RouterModule.forRoot(appRoutes),
     LocalStorageModule.withConfig({
             prefix: 'fantasy-baseball-app',
             storageType: 'localStorage'

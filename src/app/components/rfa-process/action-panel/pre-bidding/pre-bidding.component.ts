@@ -33,8 +33,22 @@ export class PreBiddingComponent implements OnInit {
         return this.rfaService.currentRfaProcessData;
     }
 
-      imReady(): void{
+
+     private updateProcessToBidding():void{
+        if(this.rfaProcess && 
+            this.teams && 
+            this.rfaProcess.readyManagers &&
+            this.rfaProcess.status === "Created" &&
+            this.teams.length === this.rfaProcess.readyManagers.length
+        ){
+            this.rfaProcess.status = "Bidding";
+            this.rfaService.updateProcess(this.rfaProcess);   
+        }
+    }
+
+    imReady(): void{
         this.rfaService.managerReady(this.manager.id, this.rfaProcess.$key);
+        this.updateProcessToBidding();
     }
 
     get processJoinable(): boolean{

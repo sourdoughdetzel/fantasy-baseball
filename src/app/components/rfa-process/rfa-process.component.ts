@@ -33,18 +33,6 @@ export class RFAProcessComponent {
         return this.rfaService.currentRfaProcessData;
     }
 
-    private updateProcessToBidding():void{
-        if(this.rfaProcess && 
-            this.teams && 
-            this.rfaProcess.readyManagers &&
-            this.rfaProcess.status === "Created" &&
-            this.teams.length === this.rfaProcess.readyManagers.length
-        ){
-            this.rfaProcess.status = "Bidding";
-            this.rfaService.updateProcess(this.rfaProcess);   
-        }
-    }
-
     get teams(): Team[]{
         let t = this.teamService.teamsData;
         this.myTeam = _.find(t, team => team.manager.id === this.manager.id);
@@ -59,7 +47,7 @@ export class RFAProcessComponent {
     }
 
     get loading(): boolean{
-        return !this.teams || !this.rfaProcess;
+        return !this.teams;
     }
 
 }
