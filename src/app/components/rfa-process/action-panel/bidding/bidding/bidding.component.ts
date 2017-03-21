@@ -1,4 +1,4 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, DoCheck} from '@angular/core';
 import {TeamService} from '../../../../../services/team.service';
 import {RfaService} from '../../../../../services/rfa.service';
 import {ManagerService} from '../../../../../services/manager.service';
@@ -17,17 +17,22 @@ import * as _ from 'lodash';
   templateUrl: './bidding.component.html',
   styleUrls: ['./bidding.component.scss']
 })
-export class BiddingComponent{
+export class BiddingComponent implements DoCheck{
   bidPoints: number;
   @Input()lastNomination: Nomination;
+
+  ngDoCheck(){
+    if(this.bidPoints <= this.minBid){
+        this.bidPoints = this.minBid;
+    }
+  }
 
   constructor(private rfaService: RfaService, 
                 private managerService: ManagerService,
                 private nominationService: NominationService,
                 private teamService: TeamService,
                 private bidService: BidService) { 
-
-                  this.bidPoints = 1;
+                    this.bidPoints = 1;
                 }
 
  
