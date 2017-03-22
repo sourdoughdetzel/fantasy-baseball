@@ -1,5 +1,6 @@
 <md-card class="panel" [ngSwitch]="rfaProcess.status">
     <pre-bidding *ngSwitchDefault></pre-bidding>
     <bidding-process *ngSwitchCase="'Bidding'"></bidding-process>
+    <roster-filling *ngSwitchCase="'RosterFilling'"></roster-filling>
     <div *ngSwitchCase="'Completed'"></div>
 </md-card>

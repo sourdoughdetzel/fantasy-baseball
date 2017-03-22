@@ -4,7 +4,7 @@
                     </md-card-title>
                     <md-card-subtitle>{{winningBidText}}</md-card-subtitle>
                     <span class="spacer"></span>
-                    <div *ngIf="canBid && nextToBid && bestBid" class="bid-container">
+                    <div *ngIf="canBid && nextToBid" class="bid-container">
                         <button md-icon-button [disabled]="bidPoints <= minBid" (click)="subPoint()" class="up-down">
                             <md-icon>keyboard_arrow_down</md-icon>
                         </button>

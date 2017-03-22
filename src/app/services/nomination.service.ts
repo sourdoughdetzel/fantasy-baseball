@@ -8,6 +8,7 @@ import * as _ from "lodash";
 @Injectable()
 export class NominationService{
     private maxNominators : number = 3;
+    private maxRFA = 3;
     private defaultNominator: any = {id: -1};
     nextNominator(process: RfaProcess, teams: Team[]): Manager{
         if(!this.processInProgress(process) || this.biddingInProgress(process))return this.defaultNominator;
@@ -59,5 +60,12 @@ export class NominationService{
     requiresCompensation(nomination: Nomination, winner: Team, teams: Team[]): boolean{
         let owner = _.find(teams, t => t.manager.id === nomination.ownerKey);
         return winner.rank < owner.rank;
+    }
+
+    nextRosterFiller(rfaProcess: RfaProcess, teams: Team[]): Manager{
+        let needPlayers = _.orderBy(_.filter(teams, t => _.filter(t.players, p => p.protected&& (p.designation === "RFA" || p.designation === "Acquired")).length < this.maxRFA), ["rank"], ["asc"]);
+        let lastNomination = this.getLastNominatingTeam(rfaProcess, teams);
+        let next = _.find(needPlayers, t => t.rank > lastNomination.rank || (_.last(needPlayers).$key === lastNomination.$key && t.$key === needPlayers[0].$key));
+        return next ? next.manager : null;
     }
 }

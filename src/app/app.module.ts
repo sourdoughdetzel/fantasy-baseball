@@ -40,6 +40,8 @@ import { InfoPanelComponent } from './components/rfa-process/info-panel/info-pan
 import { PlayerSearchComponent } from './components/rfa-process/info-panel/player-search/player-search.component';
 import { LastTransactionComponent } from './components/rfa-process/info-panel/last-transaction/last-transaction.component';
 import {SearchPipe} from './components/rfa-process/teams/player/search.pipe';
+import { RfaRecapComponent } from './components/rfa-process/rfa-recap/rfa-recap.component';
+import { RosterFillingComponent } from './components/rfa-process/action-panel/roster-filling/roster-filling.component';
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
   { path: 'teams',      component: TeamSetupComponent },
@@ -85,7 +87,9 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     CompensationDialog,
     InfoPanelComponent,
     PlayerSearchComponent,
-    LastTransactionComponent
+    LastTransactionComponent,
+    RfaRecapComponent,
+    RosterFillingComponent
   ],
   imports: [
     BrowserModule,

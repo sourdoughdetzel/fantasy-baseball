@@ -5,6 +5,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node server.js",
+    "dev-start": "npm run build && npm run start",
+    "dev-watch": "nodemon --ignore dist --exec \"npm run dev-start\"",
     "build": "webpack",
     "test": "karma start ./karma.conf.js",
     "lint": "ng lint",

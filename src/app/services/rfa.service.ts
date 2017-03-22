@@ -87,14 +87,16 @@ export class RfaService{
 
     private tryFinishProcess() : void {
         if(this.noRFASlots(this.teamService.teamsData)){
-            this.currentRfaProcessData.endDate = (new Date()).getDate();
+            this.currentRfaProcessData.endDate = (new Date()).getTime();
             this.currentRfaProcessData.status = "Complete";
             this.updateProcess(this.currentRfaProcessData);
         }
-        let haveBidPoints = _.filter(this.teamService.teamsData, t => t.bidPoints > 0);
-        if(haveBidPoints.length === 0 || (haveBidPoints.length > 0 && this.noRFASlots(haveBidPoints))){
-            this.currentRfaProcessData.status = "RosterFilling";
-            this.updateProcess(this.currentRfaProcessData);
+        else{
+            let haveBidPoints = _.filter(this.teamService.teamsData, t => t.bidPoints > 0);
+            if(haveBidPoints.length === 0 || (haveBidPoints.length > 0 && this.noRFASlots(haveBidPoints))){
+                this.currentRfaProcessData.status = "RosterFilling";
+                this.updateProcess(this.currentRfaProcessData);
+            }
         }
     }
 

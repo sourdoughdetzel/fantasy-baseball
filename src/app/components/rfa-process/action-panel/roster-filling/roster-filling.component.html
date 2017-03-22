@@ -1,0 +1,22 @@
+<md-card-header *ngIf="!needsPlayers">
+  <md-card-title class="main">
+    Looks like you don't need to fill any roster spots
+  </md-card-title>
+  <md-card-subtitle>
+    You can leave and forget about this fucking process for another year!
+  </md-card-subtitle>
+</md-card-header>
+<md-card-header *ngIf="needsPlayers">
+  <md-card-title class="main">
+    Don't leave yet, you have a few roster spots to fill
+  </md-card-title>
+    <md-card-subtitle>
+    When it's your turn, choose an avaiable player from below <br /> or enter the name of a Free Agent on the right.
+  </md-card-subtitle>
+  <span class="spacer"></span>
+  <div class="message-container">
+                        <label class="bid-message" *ngIf="myTurn">It's your turn to choose a player</label>
+                        <label class="bid-message" *ngIf="!myTurn">Someone else is choosing a player, hold tight</label>
+                    </div>
+</md-card-header>
+

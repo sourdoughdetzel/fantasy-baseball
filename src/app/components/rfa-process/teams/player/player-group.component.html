@@ -1,2 +1,2 @@
 <md-card *ngIf="!hideEmpty || (players | designation:dez).length > 0">{{dez}}s</md-card>
-<player-card *ngFor="let player of (players | designation:dez | search:searchText)" [player]="player" [action]="playerNominateBtn" [selectedKey]="playerKey"></player-card>
+<player-card *ngFor="let player of (players | designation:dez | search:searchText)" [player]="player" [action]="currentActionButton" [selectedKey]="playerKey"></player-card>
