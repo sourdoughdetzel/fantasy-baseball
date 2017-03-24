@@ -1,0 +1,15 @@
+@import '../../../app.component.scss';
+
+.status{
+    color: #{map-get($mat-green, 500)};
+    font-size:16px;
+    font-weight:bold;
+}
+
+.transcript{
+    background-color: #{map-get($mat-green, 300)};
+
+    &:hover{
+        background-color:#{map-get($mat-green, 500)};
+    }
+}

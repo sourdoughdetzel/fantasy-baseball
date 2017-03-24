@@ -50,4 +50,11 @@ export class RFAProcessComponent {
         return !this.teams;
     }
 
+    get newProcess(): boolean{
+        return !this.rfaProcess || this.completedProcess;
+    }
+
+    get completedProcess(): boolean{
+        return this.rfaProcess.status === "Complete";
+    }
 }

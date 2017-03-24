@@ -2,11 +2,7 @@
 <md-spinner *ngIf="loading" class="loading"></md-spinner>
 <div *ngIf="!loading">
     <div *ngIf="newProcess" class="need-action-container">
-        <rfa-recap></rfa-recap>
-        <div class="need-action">
-            <h3>The RFA Process has not been started.</h3>
-            <button md-raised-button (click)="createProcess()">Start It!</button>
-        </div>
+        <rfa-recap *ngIf="completedProcess" class="recap"></rfa-recap>
     </div>
     <div *ngIf="!newProcess">
         <rfa-action-panel></rfa-action-panel>

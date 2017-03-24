@@ -1,3 +1,17 @@
-<p>
-  rfa-recap works!
-</p>
+<md-toolbar>
+  <h4>RFA Processes</h4>
+  <span class="spacer"></span>
+  <button *ngIf="showAdd" class="new" md-raised-button (click)="createProcess()">Start New</button>
+</md-toolbar>
+<md-card *ngFor="let process of rfaProcesses" class="compact">
+  <md-card-header *ngIf="process.endDate">
+    <md-card-title class="main">
+        <label class="status">Complete</label>
+    </md-card-title>
+    <md-card-subtitle>
+      Process completed on {{process.endDate | date:'longDate'}}
+    </md-card-subtitle>
+    <span class="spacer"></span>
+    <button md-raised-button (click)="viewTranscript(process.$key)" class="transcript">View Transcript</button>
+  </md-card-header>
+</md-card>

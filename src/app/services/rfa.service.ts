@@ -12,15 +12,24 @@ import * as _ from 'lodash';
 @Injectable()
 export class RfaService{
     currentRfaProcessData: RfaProcess;
+    allProcessData: RfaProcess[];
     currentNominationData: Observable<Nomination>;
     private maxRFA = 3;
 
     constructor(private af: AngularFire, private teamService: TeamService){
         this.setCurrentRfaProcess();
+        this.setAllProcesses();
     }
+
 
     get rfaProcesses(): FirebaseListObservable<RfaProcess[]>{
         return this.af.database.list('/processes');
+    }
+
+    private setAllProcesses(): void{
+        this.rfaProcesses.subscribe(p => {
+            this.allProcessData = p;
+        })
     }
 
     private setCurrentRfaProcess(): void{
