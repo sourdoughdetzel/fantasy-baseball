@@ -1,14 +1,23 @@
+var subdomain = require('express-subdomain');
 const express = require('express');
 const app = express();
 
 const path = require('path');
-// Run the app by serving the static files
-// in the dist directory
+
+var router = express.Router();
+ 
+//api specific routes 
+router.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, 'dist/index.html'))
+});
+
 app.use(express.static(__dirname + '/dist'));
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
+
+app.use(subdomain('baseball', router));
 
 // Start the app by listening on the default
 // Heroku port
