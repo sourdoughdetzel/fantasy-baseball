@@ -1,0 +1,7 @@
+<label class="main">Please tell me who you are.</label><br/>
+<label class="sub">Don't be a dick about it. Just choose your own name</label><br />
+<md-select placeholder="Who are you?" [(ngModel)]="manager" (change)="setManager()" class="managers">
+    <md-option *ngFor="let man of managers | async" [value]="man">
+      {{man.nickName}}
+    </md-option>
+  </md-select>

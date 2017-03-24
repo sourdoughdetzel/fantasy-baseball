@@ -42,6 +42,8 @@ import { LastTransactionComponent } from './components/rfa-process/info-panel/la
 import {SearchPipe} from './components/rfa-process/teams/player/search.pipe';
 import { RfaRecapComponent } from './components/rfa-process/rfa-recap/rfa-recap.component';
 import { RosterFillingComponent } from './components/rfa-process/action-panel/roster-filling/roster-filling.component';
+import { ManagerDialogComponent } from './components/manager-dialog/manager-dialog.component';
+
 const appRoutes: Routes = [
   { path: 'rfa', component: RFAProcessComponent },
   { path: 'teams',      component: TeamSetupComponent },
@@ -89,7 +91,8 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     PlayerSearchComponent,
     LastTransactionComponent,
     RfaRecapComponent,
-    RosterFillingComponent
+    RosterFillingComponent,
+    ManagerDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -106,7 +109,8 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
   ],
   entryComponents:[
     AddPlayerDialog,
-    CompensationDialog
+    CompensationDialog,
+    ManagerDialogComponent
   ],
   providers: [ManagerService, TeamService, RfaService, NominationService, BidService, SearchService],
   bootstrap: [AppComponent]

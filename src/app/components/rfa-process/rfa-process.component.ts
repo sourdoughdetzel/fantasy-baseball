@@ -39,15 +39,9 @@ export class RFAProcessComponent {
         return t;
     }
 
-    createProcess(): void{
-        if(!this.rfaProcess){
-            this.rfaService.createProcess();
-            this.rfaService.managerReady(this.manager.id, this.rfaProcess.$key);
-        }
-    }
 
     get loading(): boolean{
-        return !this.teams;
+        return !this.manager || !this.teams;
     }
 
     get newProcess(): boolean{
