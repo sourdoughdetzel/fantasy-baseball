@@ -73,7 +73,7 @@ module.exports = {
         "loader": "file-loader?name=[name].[hash:20].[ext]"
       },
       {
-        "test": /\.(jpg|png|gif|otf|ttf|woff|woff2|cur|ani|ico)$/,
+        "test": /\.(jpg|png|gif|otf|ttf|woff|woff2|cur|ani)$/,
         "loader": "url-loader?name=[name].[hash:20].[ext]&limit=10000"
       },
       {
@@ -208,7 +208,7 @@ module.exports = {
       "hash": false,
       "inject": true,
       "compile": true,
-      "favicon": false,
+      "favicon": "src/favicon.ico",
       "minify": false,
       "cache": true,
       "showErrors": true,
