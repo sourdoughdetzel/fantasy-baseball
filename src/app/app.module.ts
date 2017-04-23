@@ -32,6 +32,7 @@ import { BiddingProcessComponent } from './components/rfa-process/action-panel/b
 import {PreBiddingComponent} from './components/rfa-process/action-panel/pre-bidding/pre-bidding.component';
 import {BidService} from './services/bid.service';
 import {SearchService} from './services/search.service';
+import {AdminService} from './services/admin.service';
 import { NominationComponent } from './components/rfa-process/action-panel/bidding/nomination/nomination.component';
 import { CompensationComponent } from './components/rfa-process/action-panel/bidding/compensation/compensation.component';
 import {BiddingComponent} from './components/rfa-process/action-panel/bidding/bidding/bidding.component';
@@ -112,7 +113,7 @@ export const fireBaseToken = "yJ14mCj1YID5awjlv36DyieUvm930zhP";
     CompensationDialog,
     ManagerDialogComponent
   ],
-  providers: [ManagerService, TeamService, RfaService, NominationService, BidService, SearchService],
+  providers: [ManagerService, TeamService, RfaService, NominationService, BidService, SearchService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

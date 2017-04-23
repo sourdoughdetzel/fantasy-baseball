@@ -5,6 +5,8 @@ import {TeamService} from '../../../services/team.service';
 import { MdDialogConfig, MdDialog } from '@angular/material';
 import {AddPlayerDialog} from '../add-player/add-player.component';
 import {Observable} from 'rxjs/Rx';
+import {AdminService} from '../../../services/admin.service';
+
 import * as _ from 'lodash';
 
 @Component({
@@ -19,7 +21,8 @@ export class RosterComponent implements OnInit{
     edit: boolean;
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
-        private dialog: MdDialog){  }
+        private dialog: MdDialog,
+        private adminService: AdminService){  }
     
     ngOnInit(){
         this.edit = false;
@@ -46,5 +49,9 @@ export class RosterComponent implements OnInit{
             player.teamId = this.selectedTeam.id;
             this.teamService.players.push(player);
         }
+    }
+
+    get canEdit(): boolean{
+        return this.adminService.isAdmin;
     }
 }

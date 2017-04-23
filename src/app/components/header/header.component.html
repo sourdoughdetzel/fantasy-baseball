@@ -1,6 +1,9 @@
   <md-toolbar color="primary">
     <h2>{{title}}</h2>
     <span class="spacer"></span>
+    <md-input-container class="admin" floatPlaceholder="never" color="mat-white">
+      <input mdInput placeholder="Admin Password" [(ngModel)]="adminPwd" (change)="updatePwd()">
+    </md-input-container>
     <label>{{managerDisplay}}</label>
     <button md-icon-button [mdMenuTriggerFor]="menu">
       <md-icon>fingerprint</md-icon>

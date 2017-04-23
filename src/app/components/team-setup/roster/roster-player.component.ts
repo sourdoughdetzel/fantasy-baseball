@@ -4,6 +4,7 @@ import {Team} from '../../../models/team';
 import {TeamService} from '../../../services/team.service';
 import { MdDialogConfig, MdDialog } from '@angular/material';
 import {AddPlayerDialog} from '../add-player/add-player.component';
+import {AdminService} from '../../../services/admin.service';
 import * as _ from 'lodash';
 
 @Component({
@@ -18,7 +19,8 @@ export class RosterPlayerComponent {
 
     constructor(private teamService: TeamService,
         private viewContainerRef: ViewContainerRef,
-        private dialog: MdDialog){}
+        private dialog: MdDialog,
+        private adminService: AdminService){}
 
      updatePlayer(player: Player):void{
         this.teamService.players.update(player.$key, player);
@@ -53,5 +55,9 @@ export class RosterPlayerComponent {
         config.data = {player: player};
         let dialogRef = this.dialog.open(AddPlayerDialog, config);
         dialogRef.afterClosed().subscribe(res => this.updatePlayer(player));
+    }
+
+    get canEdit(): boolean{
+        return this.adminService.isAdmin;
     }
 }

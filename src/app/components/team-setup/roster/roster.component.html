@@ -6,12 +6,12 @@
             <md-input-container *ngIf="edit">
                 <input placeholder="Bid Points" mdInput [(ngModel)]="selectedTeam.bidPoints">
             </md-input-container>
-            <button md-icon-button (click)="updateTeam()">
+            <button md-icon-button (click)="updateTeam()" *ngIf="canEdit">
                 <md-icon *ngIf="!edit">mode_edit</md-icon>
                 <md-icon *ngIf="edit">done</md-icon>
             </button>
             <span class="spacer"></span>
-            <button md-icon-button (click)="addPlayer()">
+            <button md-icon-button (click)="addPlayer()" *ngIf="canEdit">
                 <md-icon>person_add</md-icon>
             </button>
         </md-toolbar>
