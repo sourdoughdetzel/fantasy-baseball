@@ -34,6 +34,7 @@ export class RfaService{
 
     private setCurrentRfaProcess(): void{
         this.rfaProcesses.map(r => {
+            if(!r || !r.length) return null;
             let process: RfaProcess = r[0];
             if(process){
                 process.readyManagers = _.toArray(process.readyManagers);
