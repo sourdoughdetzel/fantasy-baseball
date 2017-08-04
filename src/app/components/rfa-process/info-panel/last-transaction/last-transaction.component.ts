@@ -41,7 +41,7 @@ export class LastTransactionComponent implements OnInit {
     }
 
     get winner(): Manager{
-      return this.bestBid.team.manager;
+      return this.bestBid ? this.bestBid.team.manager : null;
     }
 
     get loser(): Manager{
