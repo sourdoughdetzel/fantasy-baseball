@@ -49,6 +49,6 @@ export class RFAProcessComponent {
     }
 
     get completedProcess(): boolean{
-        return this.rfaProcess ? false : this.rfaProcess.status === "Complete";
+        return !this.rfaProcess ? false : this.rfaProcess.status === "Complete";
     }
 }
