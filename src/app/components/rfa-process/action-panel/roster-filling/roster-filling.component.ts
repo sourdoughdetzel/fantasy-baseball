@@ -53,6 +53,6 @@ export class RosterFillingComponent implements OnInit {
 
   get myTurn(): boolean{
     let next = this.nominationService.nextRosterFiller(this.rfaService.currentRfaProcessData, this.teamService.teamsData);
-    return this.manager && this.manager.id === next.id;
+    return next && this.manager.id === next.id;
   }
 }
