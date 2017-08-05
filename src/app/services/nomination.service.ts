@@ -65,6 +65,8 @@ export class NominationService{
     nextRosterFiller(rfaProcess: RfaProcess, teams: Team[]): Manager{
         let needPlayers = _.orderBy(_.filter(teams, t => _.filter(t.players, p => p.protected&& (p.designation === "RFA" || p.designation === "Acquired")).length < this.maxRFA), ["rank"], ["asc"]);
         let lastNomination = this.getLastNominatingTeam(rfaProcess, teams);
+        console.log(_.select(needPlayers, p => p.$key));
+        console.log(lastNomination);
         let next = _.find(needPlayers, t => t.rank > lastNomination.rank || (_.last(needPlayers).$key === lastNomination.$key && t.$key === needPlayers[0].$key));
         return next ? next.manager : null;
     }
