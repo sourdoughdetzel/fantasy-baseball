@@ -102,7 +102,8 @@ export class PlayerGroupComponent implements OnInit{
     }
 
     get myClaim(): boolean{
-        return this.nominationService.nextRosterFiller(this.rfaProcess, this.teams).id === this.manager.id;
+        let next = this.nominationService.nextRosterFiller(this.rfaProcess, this.teams);
+        return next && next.id === this.manager.id;
     }
     
     showNominate = (player: Player): boolean => {
