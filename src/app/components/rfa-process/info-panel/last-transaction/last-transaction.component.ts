@@ -18,7 +18,7 @@ import * as _ from 'lodash';
   styleUrls: ['./last-transaction.component.scss']
 })
 export class LastTransactionComponent implements OnInit {
-
+  let defaultManager: Manager;
   constructor(private rfaService: RfaService, 
                 private managerService: ManagerService,
                 private nominationService: NominationService,
@@ -26,7 +26,9 @@ export class LastTransactionComponent implements OnInit {
                 private bidService: BidService) { }
 
   ngOnInit() {
+      this.defaultManager = {firstName: "Some", id: 0, lastName: "Asshole", nickName: "Some Asshole", teamId: 0};
   }
+
 
    get teams(): Team[]{
         return this.teamService.teamsData;
@@ -41,11 +43,12 @@ export class LastTransactionComponent implements OnInit {
     }
 
     get winner(): Manager{
-      return this.bestBid ? this.bestBid.team.manager : null;
+      return this.bestBid ? this.bestBid.team.manager : this.defaultManager;
     }
 
     get loser(): Manager{
-      return _.find(this.teams, t => t.manager.id === this.lastNomination.ownerKey).manager;
+      let lost = _.find(this.teams, t => t.manager.id === this.lastNomination.ownerKey);
+      return lost ? lost.manager : this.defaultManager;
     }
 
     get wonPlayer(): string{
