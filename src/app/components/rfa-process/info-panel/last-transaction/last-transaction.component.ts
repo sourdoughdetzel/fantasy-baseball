@@ -18,7 +18,7 @@ import * as _ from 'lodash';
   styleUrls: ['./last-transaction.component.scss']
 })
 export class LastTransactionComponent implements OnInit {
-  let defaultManager: Manager;
+  private defaultManager: Manager;
   constructor(private rfaService: RfaService, 
                 private managerService: ManagerService,
                 private nominationService: NominationService,
