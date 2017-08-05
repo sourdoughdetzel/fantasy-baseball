@@ -67,7 +67,7 @@ export class NominationService{
         let lastNomination = this.getLastNominatingTeam(rfaProcess, teams);
         console.log(_.map(needPlayers, '$key'));
         console.log(lastNomination);
-        let next = _.find(needPlayers, t => t.rank > lastNomination.rank || (_.last(needPlayers).$key === lastNomination.$key && t.$key === needPlayers[0].$key));
+        let next = _.find(needPlayers, t => t.rank > lastNomination.rank || t.$key === needPlayers[0].$key);
         return next ? next.manager : null;
     }
 }
