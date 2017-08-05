@@ -26,7 +26,7 @@ export class LastTransactionComponent implements OnInit {
                 private bidService: BidService) { }
 
   ngOnInit() {
-      this.defaultManager = {firstName: "Some", id: 0, lastName: "Asshole", nickName: "Some Asshole", teamId: 0};
+      this.defaultManager = {$key: "", firstName: "Some", id: 0, lastName: "Asshole", nickName: "Some Asshole", teamId: 0};
   }
 
 
